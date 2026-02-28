@@ -1,8 +1,8 @@
 # Irha Beauty — Backend Constitution
 
-**Version**: v2.0.0
+**Version**: v3.0.0
 **Ratified**: 2026-02-28
-**Amended**: 2026-02-28 — Phase 2: Database Connection added
+**Amended**: 2026-02-28 — Phase 3: Authentication added
 
 ---
 
@@ -10,8 +10,9 @@
 
 - **Project**: Irha Beauty Backend API
 - **Phase 1 Scope**: ✅ Complete — CRUD APIs with in-memory storage
-- **Phase 2 Scope**: Database connection — replace in-memory storage with NeonDB (PostgreSQL) via SQLAlchemy async + Alembic migrations
-- **Goal**: All API contracts and business logic validated in Phase 1. Phase 2 wires the real database without changing any route or schema.
+- **Phase 2 Scope**: ✅ Complete — NeonDB (PostgreSQL) via SQLAlchemy async + Alembic migrations
+- **Phase 3 Scope**: Authentication — custom JWT in httpOnly cookies, bcrypt password hashing, register/login/logout/refresh/me endpoints
+- **Goal**: Layered domain architecture. Each phase adds capability without breaking the previous layer's contracts.
 
 ---
 
@@ -19,16 +20,19 @@
 
 | Layer | Choice | Phase |
 |---|---|---|
-| Language | Python 3.12+ | 1 + 2 |
-| Framework | FastAPI | 1 + 2 |
-| Type validation | Pydantic v2 | 1 + 2 |
-| Server | Uvicorn | 1 + 2 |
-| Tests | pytest + httpx (async test client) | 1 + 2 |
-| ORM | SQLAlchemy 2.x (async) | 2 |
-| DB driver | asyncpg (TCP) | 2 |
-| Database | NeonDB — serverless PostgreSQL | 2 |
-| Migrations | Alembic | 2 |
-| Config/Secrets | pydantic-settings + `.env` | 2 |
+| Language | Python 3.12+ | 1 + 2 + 3 |
+| Framework | FastAPI | 1 + 2 + 3 |
+| Type validation | Pydantic v2 | 1 + 2 + 3 |
+| Server | Uvicorn | 1 + 2 + 3 |
+| Tests | pytest + httpx (async test client) | 1 + 2 + 3 |
+| ORM | SQLAlchemy 2.x (async) | 2 + 3 |
+| DB driver | asyncpg (TCP) | 2 + 3 |
+| Database | NeonDB — serverless PostgreSQL | 2 + 3 |
+| Migrations | Alembic | 2 + 3 |
+| Config/Secrets | pydantic-settings + `.env` | 2 + 3 |
+| Password hashing | passlib[bcrypt] | 3 |
+| JWT | PyJWT[cryptography] | 3 |
+| Token transport | httpOnly cookies (Secure, SameSite=Lax) | 3 |
 
 ---
 
@@ -41,19 +45,27 @@ backend/
 │   ├── core/
 │   │   ├── exceptions.py        # Custom exception handlers
 │   │   ├── database.py          # Async engine, sessionmaker, Base
-│   │   └── deps.py              # FastAPI dependency: get_db session
+│   │   ├── deps.py              # get_db session + get_current_user  ← updated Phase 3
+│   │   ├── config.py            # pydantic-settings Settings
+│   │   └── security.py          # JWT encode/decode, bcrypt           ← NEW in Phase 3
+│   ├── auth/                    # Auth domain                         ← NEW in Phase 3
+│   │   ├── router.py            # /register /login /logout /refresh /me
+│   │   ├── schemas.py           # RegisterRequest, LoginRequest, TokenRead, UserRead
+│   │   ├── service.py           # register, login, logout, refresh logic
+│   │   └── tests/
+│   │       └── test_auth.py
 │   └── <domain>/
 │       ├── router.py            # Route definitions
 │       ├── schemas.py           # Pydantic request/response models
-│       ├── models.py            # SQLAlchemy ORM model          ← NEW in Phase 2
-│       ├── repository.py        # All DB queries (no business logic)  ← NEW in Phase 2
+│       ├── models.py            # SQLAlchemy ORM model
+│       ├── repository.py        # All DB queries (no business logic)
 │       ├── service.py           # Business logic (calls repository)
 │       └── tests/
 │           └── test_<domain>.py
-├── alembic/                     # Migration scripts              ← NEW in Phase 2
+├── alembic/                     # Migration scripts
 │   ├── env.py
 │   └── versions/
-├── alembic.ini                  # Alembic config                 ← NEW in Phase 2
+├── alembic.ini
 ├── conftest.py                  # Global pytest fixtures
 ├── .env                         # Secrets — never committed
 ├── .env.example                 # Committed template with no values
@@ -80,7 +92,17 @@ backend/
 - All request bodies validated with Pydantic models — no raw dicts
 - All responses return Pydantic models — no untyped dicts
 - Uniform error response: `{ "detail": "...", "code": "SCREAMING_SNAKE" }`
-- HTTP status codes: `200`, `201`, `204`, `404`, `422`
+- HTTP status codes: `200`, `201`, `204`, `400`, `401`, `403`, `404`, `409`, `422`
+
+**Auth-specific routes** (Phase 3 — outside standard CRUD pattern):
+
+| Action | Method | Path |
+|---|---|---|
+| Register | POST | `/api/v1/auth/register` |
+| Login | POST | `/api/v1/auth/login` |
+| Logout | POST | `/api/v1/auth/logout` |
+| Refresh token | POST | `/api/v1/auth/refresh` |
+| Current user | GET | `/api/v1/auth/me` |
 
 ---
 
@@ -131,6 +153,26 @@ Updated for Phase 2 — four layers:
 - Minimum required variables:
   - `DATABASE_URL` — full asyncpg connection string to NeonDB
 - Settings loaded once at startup, injected where needed
+- **Phase 3 adds** to required `.env` variables:
+  - `JWT_SECRET` — random 32-byte hex string, used to sign access tokens
+  - `JWT_ALGORITHM` — `HS256`
+  - `ACCESS_TOKEN_EXPIRE_MINUTES` — e.g. `30`
+  - `REFRESH_TOKEN_EXPIRE_DAYS` — e.g. `7`
+
+---
+
+## 8a. Security & Auth Rules (Phase 3)
+
+- **Passwords**: hashed with bcrypt via `passlib[bcrypt]` — never stored plain, never logged
+- **JWT**: signed with `HS256` using `JWT_SECRET` from `.env`
+- **Access token**: short-lived (30 min), stored in httpOnly cookie named `access_token`
+- **Refresh token**: long-lived (7 days), stored in httpOnly cookie named `refresh_token`
+- **Cookie flags**: `httpOnly=True`, `secure=True` (HTTPS only in production), `samesite="lax"`
+- **Token payload**: `{ "sub": user_id, "exp": expiry }`
+- **`get_current_user` dependency**: reads `access_token` cookie, decodes JWT, returns User ORM object — raises `401` if missing or invalid
+- **Auth domain has no `models.py` or `repository.py`**: it reuses `app/users/models.py` (User) and `app/users/repository.py` (user lookups)
+- **No bearer tokens in Authorization header** — cookies only
+- **CORS**: must explicitly allowlist frontend origin and set `allow_credentials=True`
 
 ---
 
@@ -183,12 +225,24 @@ Updated for Phase 2:
 - `.env` + `.env.example`
 - Updated `conftest.py` — test DB session with rollback isolation
 
-**Phase 2 does NOT include:**
-- Authentication / JWT
+**Phase 3 includes:**
+- `app/core/security.py` — JWT encode/decode, bcrypt hash/verify
+- `app/core/deps.py` — add `get_current_user` dependency
+- `app/core/config.py` — add JWT env variables
+- `app/auth/` — router, schemas, service, tests
+- Alembic migration: no new tables (auth reuses `users` table — add `hashed_password` column if not present)
+- CORS middleware added to `app/main.py`
+- `.env` + `.env.example` updated with JWT variables
+
+**Phase 3 does NOT include:**
+- Social login (Google, GitHub)
+- Email verification / magic links
+- Password reset via email
+- Role-based access control (RBAC)
 - File storage
 - Payment integration
 
-These are deferred to Phase 3+.
+These are deferred to Phase 4+.
 
 ---
 
@@ -198,4 +252,4 @@ These are deferred to Phase 3+.
 - Amendments require: a proposed change, ratification note, and version bump.
 - All specs, plans, tasks, and code reviews must cite compliance with this constitution.
 
-**Version**: v2.0.0 | **Ratified**: 2026-02-28 | **Last Amended**: 2026-02-28
+**Version**: v3.0.0 | **Ratified**: 2026-02-28 | **Last Amended**: 2026-02-28
