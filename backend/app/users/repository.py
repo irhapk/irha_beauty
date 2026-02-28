@@ -45,3 +45,17 @@ async def update_user(db: AsyncSession, user: User, data: UserUpdate) -> User:
 async def delete_user(db: AsyncSession, user: User) -> None:
     await db.delete(user)
     await db.commit()
+
+
+async def create_user_with_password(
+    db: AsyncSession, full_name: str, email: str, hashed_password: str
+) -> User:
+    user = User(
+        full_name=full_name.strip(),
+        email=email.lower().strip(),
+        hashed_password=hashed_password,
+    )
+    db.add(user)
+    await db.commit()
+    await db.refresh(user)
+    return user
