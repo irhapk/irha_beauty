@@ -22,7 +22,7 @@ Key technical decisions: directional AnimatePresence carousel, CSS group-hover d
 **Target Platform**: Web — desktop + mobile (320px → 1470px)
 **Performance Goals**: Above-fold content visible within 2s; animations at 60fps; no layout shift on image load
 **Constraints**: Images must be in `frontend/public/`; cookies httpOnly (no JS access); no Stripe in Phase 4
-**Scale/Scope**: 1 product, 3 categories, ~12 routes, single developer
+**Scale/Scope**: 1 product, 4 categories (facewash active; shampoo/oils/fragrance coming-soon), ~12 routes, single developer
 
 ---
 
@@ -72,7 +72,7 @@ frontend/                          ← Next.js 15 app (to be initialised)
 │   │   ├── login/page.tsx         # Login page
 │   │   └── register/page.tsx      # Register page
 │   ├── categories/
-│   │   └── [slug]/page.tsx        # Dynamic: shampoo=live, oils/fragrance=coming-soon
+│   │   └── [slug]/page.tsx        # Dynamic: facewash=live, shampoo/oils/fragrance=coming-soon
 │   ├── products/
 │   │   ├── page.tsx               # All products listing
 │   │   └── [id]/page.tsx          # Product detail page

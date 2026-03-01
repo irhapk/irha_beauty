@@ -3,6 +3,15 @@ import type { Slide } from "@/types";
 export const SLIDES: Slide[] = [
   {
     id: 1,
+    category: "facewash",
+    bannerImage: "/facewash_banner.png",
+    subtitle: "PURE SKIN. PURE CONFIDENCE.",
+    headline: "Cleanse. Glow. Shine.",
+    body: "Advanced oil control facewash enriched with Vitamin E for fresh, radiant skin.",
+    ctaHref: "/categories/facewash",
+  },
+  {
+    id: 2,
     category: "shampoo",
     bannerImage: "/shampoo_banner.png",
     subtitle: "QUALITY YOU CAN FEEL",
@@ -11,7 +20,7 @@ export const SLIDES: Slide[] = [
     ctaHref: "/categories/shampoo",
   },
   {
-    id: 2,
+    id: 3,
     category: "oils",
     bannerImage: "/oil_banner.png",
     subtitle: "PURE LUXURY",
@@ -20,7 +29,7 @@ export const SLIDES: Slide[] = [
     ctaHref: "/categories/oils",
   },
   {
-    id: 3,
+    id: 4,
     category: "fragrance",
     bannerImage: "/fragrance_banner.png",
     subtitle: "SIGNATURE SCENTS",

@@ -17,18 +17,18 @@ Build the complete customer-facing online store for Irha Beauty — a luxury Pak
 
 ### User Story 1 — Browse & Discover Products (Priority: P1)
 
-A first-time visitor lands on the homepage and is immediately drawn in by a full-screen animated banner showcase. They browse the three product categories — Oils, Fragrance, and Shampoo — and navigate to a product detail page to learn more before deciding to buy.
+A first-time visitor lands on the homepage and is immediately drawn in by a full-screen animated banner showcase. They browse the four product categories — Facewash (active), Oils, Fragrance, and Shampoo — and navigate to a product detail page to learn more before deciding to buy.
 
 **Why this priority**: This is the entry point for every customer. If browsing is not beautiful and intuitive, no purchase ever happens. All other stories depend on this one working first.
 
-**Independent Test**: Visit the homepage → see the animated hero carousel cycling through Oils, Fragrance, and Shampoo banners → click "Discover Now" on the Shampoo banner → land on the Shampoo category page → click the Shampoo product → view full product detail with images, price, and description.
+**Independent Test**: Visit the homepage → see the animated hero carousel cycling through Facewash, Oils, Fragrance, and Shampoo banners → click "Discover Now" on the Facewash banner → land on the Facewash category page → click the Facewash product → view full product detail with images, price, and description.
 
 **Acceptance Scenarios**:
 
 1. **Given** a visitor opens the homepage, **When** the page loads, **Then** a full-screen hero carousel is visible showing the first banner with an animated "Discover Now" button, and the carousel automatically advances every 4 seconds.
-2. **Given** the hero carousel is running, **When** the visitor watches without interaction, **Then** the carousel cycles through all three banners (Oils → Shampoo → Fragrance) with smooth animated transitions and each banner displays its own "Discover Now" button.
-3. **Given** a visitor clicks "Discover Now" on the Shampoo banner, **When** the click is registered, **Then** the visitor is taken to the Shampoo category page showing the available product.
-4. **Given** a visitor clicks "Discover Now" on the Oils or Fragrance banner, **When** the click is registered, **Then** the visitor is taken to that category's page which displays a beautiful "Coming Soon" message.
+2. **Given** the hero carousel is running, **When** the visitor watches without interaction, **Then** the carousel cycles through all four banners (Facewash → Oils → Shampoo → Fragrance) with smooth animated transitions and each banner displays its own "Discover Now" button.
+3. **Given** a visitor clicks "Discover Now" on the Facewash banner, **When** the click is registered, **Then** the visitor is taken to the Facewash category page showing the available product.
+4. **Given** a visitor clicks "Discover Now" on the Oils, Shampoo, or Fragrance banner, **When** the click is registered, **Then** the visitor is taken to that category's page which displays a beautiful "Coming Soon" message.
 5. **Given** a visitor is on the homepage, **When** they scroll down, **Then** each section (categories grid, featured product, testimonials area) animates into view one by one as the visitor reaches it.
 6. **Given** a visitor is on the product detail page, **When** they hover over the product image, **Then** a second product image smoothly appears in place of the first.
 7. **Given** a visitor opens any page on a mobile phone, **When** the page loads, **Then** the layout adapts correctly and all animations still play.
@@ -124,16 +124,16 @@ A curious visitor navigates to the About page to learn the Irha Beauty brand sto
 ### Functional Requirements
 
 **Homepage**
-- **FR-001**: The homepage MUST display a full-screen hero carousel with three slides (Oils, Shampoo, Fragrance), each with its own banner image and an animated "Discover Now" button.
+- **FR-001**: The homepage MUST display a full-screen hero carousel with four slides (Facewash, Oils, Shampoo, Fragrance), each with its own banner image and an animated "Discover Now" button.
 - **FR-002**: The hero carousel MUST auto-advance every 4 seconds with animated transitions between slides. Manual navigation (dots/arrows) MUST also be available.
-- **FR-003**: Each "Discover Now" button MUST link to its respective category page (`/categories/oils`, `/categories/shampoo`, `/categories/fragrance`).
-- **FR-004**: The homepage MUST display a categories grid showing all three categories with representative images and titles.
+- **FR-003**: Each "Discover Now" button MUST link to its respective category page (`/categories/facewash`, `/categories/oils`, `/categories/shampoo`, `/categories/fragrance`).
+- **FR-004**: The homepage MUST display a categories grid showing all four categories with representative images and titles.
 - **FR-005**: The homepage MUST display a featured products section showcasing the available product(s).
 - **FR-006**: Every section on the homepage MUST animate into view as the user scrolls down — nothing is pre-rendered visible.
 
 **Categories & Products**
-- **FR-007**: The Shampoo category page MUST display a grid of available products with image, name, and price.
-- **FR-008**: The Oils and Fragrance category pages MUST display a "Coming Soon" state — visually designed, not a blank page.
+- **FR-007**: The Facewash category page MUST display a grid of available products with image, name, and price.
+- **FR-008**: The Oils, Shampoo, and Fragrance category pages MUST display a "Coming Soon" state — visually designed, not a blank page.
 - **FR-009**: Each product card MUST display a primary image by default and switch to a secondary (hover) image when the user hovers over the card.
 - **FR-010**: Clicking a product card MUST navigate to the full product detail page.
 - **FR-011**: The product detail page MUST display: product name, price (in PKR), full description, both product images (with hover/switch behaviour), and an "Add to Cart" button.
@@ -181,7 +181,7 @@ A curious visitor navigates to the About page to learn the Irha Beauty brand sto
 ### Key Entities
 
 - **Product**: Name, price (PKR), description, primary image, hover image, category, stock status
-- **Category**: Name, slug (oils / fragrance / shampoo), status (active / coming-soon), banner image, category image
+- **Category**: Name, slug (facewash / oils / shampoo / fragrance), status (active / coming-soon), banner image, category image
 - **Cart Item**: Product reference, quantity, unit price
 - **Order**: Customer name, delivery address, city, phone, list of items, total (PKR), status, date placed
 - **User**: Full name, email, authentication status
@@ -195,7 +195,7 @@ A curious visitor navigates to the About page to learn the Irha Beauty brand sto
 - **SC-001**: A first-time visitor can find a product and add it to cart within 60 seconds of landing on the homepage.
 - **SC-002**: A customer can complete the full checkout process (cart → delivery details → order confirmation) in under 3 minutes.
 - **SC-003**: All page animations play smoothly with no visible lag or flickering on a standard laptop or mid-range mobile phone.
-- **SC-004**: The hero carousel cycles through all three banners automatically without any user interaction required.
+- **SC-004**: The hero carousel cycles through all four banners automatically without any user interaction required.
 - **SC-005**: Every page loads its above-the-fold content and begins animations within 2 seconds on a standard broadband connection.
 - **SC-006**: The site layout and all content are fully usable on screens as small as 320px wide.
 - **SC-007**: A new user can register, be automatically logged in, and see their name in the header — all within a single uninterrupted flow.
@@ -206,8 +206,8 @@ A curious visitor navigates to the About page to learn the Irha Beauty brand sto
 ## Assumptions
 
 - All product data (name, price, description, images) is hardcoded or fetched from the existing Irha Beauty backend API running locally at port 8000.
-- There is exactly one active product in Phase 4: Irha Argan Shampoo at PKR 1,800.
-- Oils and Fragrance categories show "Coming Soon" — no products are listed under them.
+- There is exactly one active product in Phase 4: Irha's Oil Control Facewash at PKR 499.
+- Oils, Shampoo, and Fragrance categories show "Coming Soon" — no products are listed under them.
 - No payment gateway integration in this phase — Cash on Delivery only.
 - No stock management — the single product is assumed always in stock.
 - No email notifications for orders or registration in this phase.
