@@ -14,6 +14,7 @@ from app.core.database import Base
 from app.categories.models import Category  # noqa: F401
 from app.products.models import Product     # noqa: F401
 from app.users.models import User           # noqa: F401
+from app.orders.models import Order, OrderItem  # noqa: F401
 # ---------------------------------------------------------------------------
 
 config = context.config

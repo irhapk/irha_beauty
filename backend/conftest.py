@@ -48,6 +48,9 @@ async def db_session() -> AsyncSession:
         yield session
         # SQLite: DELETE clears rows; INTEGER PRIMARY KEY (no AUTOINCREMENT)
         # resets to 1 on next insert when the table is empty.
+        # Order matters: child tables before parent tables (FK constraints).
+        await session.execute(text("DELETE FROM order_items"))
+        await session.execute(text("DELETE FROM orders"))
         await session.execute(text("DELETE FROM products"))
         await session.execute(text("DELETE FROM users"))
         await session.execute(text("DELETE FROM categories"))
