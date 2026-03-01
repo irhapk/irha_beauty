@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 import { motion } from "framer-motion";
-import { FaInstagram, FaWhatsapp } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
 import { FiMail, FiPhone } from "react-icons/fi";
 
 import { FadeIn, ScrollReveal, scrollItemVariants } from "@/components/animations";
@@ -38,8 +38,7 @@ const CONTACT_ITEMS: ContactItem[] = [
 ];
 
 const SOCIAL_LINKS: SocialLink[] = [
-  { icon: FaInstagram, label: "Instagram", href: "#" },
-  { icon: FaWhatsapp, label: "WhatsApp", href: "#" },
+  { icon: FaInstagram, label: "Instagram", href: "https://www.instagram.com/irhapk/" },
 ];
 
 export default function ContactPage(): React.ReactElement {

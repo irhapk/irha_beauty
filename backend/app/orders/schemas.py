@@ -30,12 +30,14 @@ class OrderItemRead(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     product_id: int
+    product_name: str
     quantity: int
     unit_price: float
 
 
 class CreateOrderRequest(BaseModel):
     customer_name: str
+    email: str
     address: str
     city: str
     phone: str
@@ -75,6 +77,7 @@ class OrderRead(BaseModel):
     id: int
     user_id: int | None
     customer_name: str
+    email: str
     address: str
     city: str
     phone: str
