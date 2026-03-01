@@ -5,7 +5,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
     DATABASE_URL: str
-    TEST_DATABASE_URL: str
+    TEST_DATABASE_URL: str = ""  # optional — only used in tests, not required in prod
 
     JWT_SECRET: str = "dev-secret-change-in-production"
     JWT_ALGORITHM: str = "HS256"
@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
     ENVIRONMENT: str = "dev"
     ADMIN_EMAIL: str = "info.irhabeauty@gmail.com"
+    CORS_ORIGINS: str = "http://localhost:3000"
 
 
 settings = Settings()
