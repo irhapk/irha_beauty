@@ -14,6 +14,7 @@ import type { ApiError, CreateOrderPayload } from "@/types";
 
 interface FormFields {
   customer_name: string;
+  email: string;
   address: string;
   city: string;
   phone: string;
@@ -23,6 +24,7 @@ type FieldErrors = Partial<Record<keyof FormFields, string>>;
 
 const FIELD_LABELS: Record<keyof FormFields, string> = {
   customer_name: "Full Name",
+  email: "Email",
   address: "Address",
   city: "City",
   phone: "Phone",
@@ -30,6 +32,7 @@ const FIELD_LABELS: Record<keyof FormFields, string> = {
 
 const FIELD_KEYS: (keyof FormFields)[] = [
   "customer_name",
+  "email",
   "address",
   "city",
   "phone",
@@ -47,6 +50,7 @@ export function CheckoutForm({ onSuccess }: CheckoutFormProps): React.ReactEleme
 
   const [fields, setFields] = useState<FormFields>({
     customer_name: "",
+    email: "",
     address: "",
     city: "",
     phone: "",
@@ -57,7 +61,13 @@ export function CheckoutForm({ onSuccess }: CheckoutFormProps): React.ReactEleme
 
   function validate(): boolean {
     const next: FieldErrors = {};
+    const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!fields.customer_name.trim()) next.customer_name = "Full name is required.";
+    if (!fields.email.trim()) {
+      next.email = "Email is required.";
+    } else if (!EMAIL_REGEX.test(fields.email)) {
+      next.email = "Enter a valid email address.";
+    }
     if (!fields.address.trim()) next.address = "Address is required.";
     if (!fields.city.trim()) next.city = "City is required.";
     if (!fields.phone.trim()) {
@@ -79,6 +89,7 @@ export function CheckoutForm({ onSuccess }: CheckoutFormProps): React.ReactEleme
 
     const payload: CreateOrderPayload = {
       customer_name: fields.customer_name,
+      email: fields.email,
       address: fields.address,
       city: fields.city,
       phone: fields.phone,
@@ -122,7 +133,7 @@ export function CheckoutForm({ onSuccess }: CheckoutFormProps): React.ReactEleme
             <Input
               id={key}
               name={key}
-              type={key === "phone" ? "tel" : "text"}
+              type={key === "phone" ? "tel" : key === "email" ? "email" : "text"}
               value={fields[key]}
               onChange={(e) => handleChange(key, e.target.value)}
               placeholder={FIELD_LABELS[key]}

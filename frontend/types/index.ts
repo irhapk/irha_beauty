@@ -40,8 +40,16 @@ export interface OrderItemIn {
   unit_price: number;
 }
 
+export interface OrderItemRead {
+  product_id: number;
+  product_name: string;
+  quantity: number;
+  unit_price: number;
+}
+
 export interface CreateOrderPayload {
   customer_name: string;
+  email: string;
   address: string;
   city: string;
   phone: string;
@@ -53,10 +61,11 @@ export interface CreateOrderPayload {
 export interface Order {
   id: number;
   customer_name: string;
+  email: string;
   address: string;
   city: string;
   phone: string;
-  items: OrderItemIn[];
+  items: OrderItemRead[];
   payment_method: string;
   total_amount: number;
   status: "pending" | "processing" | "delivered" | "cancelled";

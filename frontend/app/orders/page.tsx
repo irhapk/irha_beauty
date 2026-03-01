@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 
 import { motion } from "framer-motion";
-import { FiCheckCircle, FiPackage } from "react-icons/fi";
+import { FiCheckCircle, FiLoader, FiPackage } from "react-icons/fi";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { FadeIn, ScrollReveal, scrollItemVariants } from "@/components/animations";
@@ -63,7 +63,14 @@ function OrdersContent(): React.ReactElement {
       .finally(() => setIsLoading(false));
   }, [isAuthenticated]);
 
-  if (authLoading || !isAuthenticated) return <></>;
+  if (authLoading) return (
+    <main className="flex min-h-screen items-center justify-center pt-20">
+      <FiLoader className="h-8 w-8 animate-spin text-gold" />
+    </main>
+  );
+
+  if (!isAuthenticated) return <></>;
+
 
   return (
     <main className="pt-20">
@@ -132,19 +139,18 @@ function OrdersContent(): React.ReactElement {
                 </div>
 
                 {/* Items summary */}
-                <div className="mt-4 border-t border-gray-50 pt-4">
-                  <p className="text-xs text-gray-mid">
-                    {order.items.length}{" "}
-                    {order.items.length === 1 ? "item" : "items"}
-                    {order.items.length > 0 &&
-                      ` — qty ${order.items.map((i) => i.quantity).join(", ")}`}
-                  </p>
+                <div className="mt-4 space-y-1 border-t border-gray-50 pt-4">
+                  {order.items.map((item, i) => (
+                    <p key={i} className="text-xs text-gray-mid">
+                      {item.product_name} × {item.quantity}
+                    </p>
+                  ))}
                 </div>
 
                 {/* Footer row */}
                 <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
                   <p className="text-xs text-gray-mid">
-                    {order.city} · {order.phone}
+                    {order.email} · {order.city} · {order.phone}
                   </p>
                   <p className="text-sm font-medium text-gold">
                     {formatPrice(order.total_amount)}

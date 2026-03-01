@@ -1,5 +1,6 @@
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from app.orders.models import Order, OrderItem
 from app.orders.schemas import CreateOrderRequest
@@ -13,6 +14,7 @@ async def create_order(
     order = Order(
         user_id=user_id,
         customer_name=data.customer_name,
+        email=data.email,
         address=data.address,
         city=data.city,
         phone=data.phone,
@@ -33,13 +35,24 @@ async def create_order(
         db.add(item)
 
     await db.commit()
-    await db.refresh(order)
-    return order
+    # Reload with products eagerly to populate product_name
+    result = await db.execute(
+        select(Order)
+        .options(selectinload(Order.items).selectinload(OrderItem.product))
+        .where(Order.id == order.id)
+    )
+    return result.scalar_one()
+
+
+def _orders_query():
+    return select(Order).options(
+        selectinload(Order.items).selectinload(OrderItem.product)
+    )
 
 
 async def get_orders_by_user(db: AsyncSession, user_id: int) -> list[Order]:
     result = await db.execute(
-        select(Order)
+        _orders_query()
         .where(Order.user_id == user_id)
         .order_by(Order.created_at.desc())
     )
@@ -47,12 +60,16 @@ async def get_orders_by_user(db: AsyncSession, user_id: int) -> list[Order]:
 
 
 async def get_all_orders(db: AsyncSession) -> list[Order]:
-    result = await db.execute(select(Order).order_by(Order.created_at.desc()))
+    result = await db.execute(
+        _orders_query().order_by(Order.created_at.desc())
+    )
     return list(result.scalars().all())
 
 
 async def get_order(db: AsyncSession, order_id: int) -> Order | None:
-    result = await db.execute(select(Order).where(Order.id == order_id))
+    result = await db.execute(
+        _orders_query().where(Order.id == order_id)
+    )
     return result.scalar_one_or_none()
 
 
