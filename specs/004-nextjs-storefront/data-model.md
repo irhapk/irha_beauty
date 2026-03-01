@@ -13,10 +13,10 @@ interface Product {
   name: string
   slug: string
   description: string
-  price: number           // PKR, integer (e.g. 1800)
-  image: string           // filename: "shampoo.jpg"
-  hoverImage: string      // filename: "shampoo-hover.jpg"
-  category: string        // "shampoo" | "oils" | "fragrance"
+  price: number           // PKR, integer (e.g. 499)
+  image: string           // filename: "shampoo_one.png"
+  hoverImage: string      // filename: "shampoo_two.png"
+  category: string        // "facewash" | "oils" | "shampoo" | "fragrance"
   inStock: boolean
 }
 ```
@@ -26,10 +26,10 @@ interface Product {
 interface Category {
   id: number
   name: string
-  slug: string            // "shampoo" | "oils" | "fragrance"
+  slug: string            // "facewash" | "oils" | "shampoo" | "fragrance"
   status: "active" | "coming-soon"
-  bannerImage: string     // "banner-shampoo.jpg"
-  categoryImage: string   // "category-shampoo.jpg"
+  bannerImage: string     // "facewash_banner.png"
+  categoryImage: string   // "facewash_category.png"
 }
 ```
 
@@ -112,13 +112,13 @@ interface Order {
 ```ts
 interface Slide {
   id: number
-  category: string           // "oils" | "shampoo" | "fragrance"
-  bannerImage: string        // "banner-oils.jpg"
-  subtitle: string           // "QUALITY YOU CAN FEEL"
-  headline: string           // "Pure Oils, Pure Luxury"
+  category: string           // "facewash" | "oils" | "shampoo" | "fragrance"
+  bannerImage: string        // "facewash_banner.png"
+  subtitle: string           // "PURE SKIN. PURE CONFIDENCE."
+  headline: string           // "Cleanse. Glow. Shine."
   body: string               // Supporting copy
   ctaLabel: string           // "Discover Now"
-  ctaHref: string            // "/categories/oils"
+  ctaHref: string            // "/categories/facewash"
 }
 ```
 
@@ -161,16 +161,32 @@ Products and categories are fetched from the FastAPI backend at `/api/v1/product
 
 ### Seed data (already in NeonDB or to be seeded):
 ```
-Category: { name: "Shampoo",   slug: "shampoo",   status: "active" }
-Category: { name: "Oils",      slug: "oils",       status: "coming-soon" }
+Category: { name: "Facewash",  slug: "facewash",  status: "active" }
+Category: { name: "Shampoo",   slug: "shampoo",   status: "coming-soon" }
+Category: { name: "Hair Oils", slug: "oils",       status: "coming-soon" }
 Category: { name: "Fragrance", slug: "fragrance",  status: "coming-soon" }
 
 Product: {
-  name: "Irha Argan Shampoo",
-  price: 1800,
-  category: "shampoo",
-  description: "Nourish and revitalise your hair with our premium Argan Oil Shampoo...",
-  image: "shampoo.jpg",
-  hoverImage: "shampoo-hover.jpg"
+  name: "Irha's Oil Control Facewash",
+  price: 499,
+  category: "facewash",
+  description: "Advanced oil control facewash enriched with Vitamin E. Deeply cleanses pores, eliminates excess sebum, and keeps skin fresh and matte all day.",
+  image: "shampoo_one.png",
+  hoverImage: "shampoo_two.png"
 }
+```
+
+### Static data (frontend/lib/static-data.ts — used until backend returns slug/image fields):
+```
+STATIC_CATEGORIES:
+  { id: 4, name: "Facewash",  slug: "facewash",  status: "active",       bannerImage: "/facewash_banner.png",    categoryImage: "/facewash_category.png" }
+  { id: 1, name: "Shampoo",   slug: "shampoo",   status: "coming-soon",  bannerImage: "/shampoo_banner.png",     categoryImage: "/shampoo_category.png" }
+  { id: 2, name: "Hair Oils", slug: "oils",       status: "coming-soon",  bannerImage: "/oil_banner.png",         categoryImage: "/oil_category.png" }
+  { id: 3, name: "Fragrance", slug: "fragrance",  status: "coming-soon",  bannerImage: "/fragrance_banner.png",   categoryImage: "/fragrance_category.png" }
+
+SLIDES:
+  { id: 1, category: "facewash",  bannerImage: "/facewash_banner.png",  ctaHref: "/categories/facewash" }
+  { id: 2, category: "oils",      bannerImage: "/oil_banner.png",       ctaHref: "/categories/oils" }
+  { id: 3, category: "shampoo",   bannerImage: "/shampoo_banner.png",   ctaHref: "/categories/shampoo" }
+  { id: 4, category: "fragrance", bannerImage: "/fragrance_banner.png", ctaHref: "/categories/fragrance" }
 ```

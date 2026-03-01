@@ -5,10 +5,18 @@ import type { Category, Product } from "@/types";
 
 export const STATIC_CATEGORIES: Category[] = [
   {
+    id: 4,
+    name: "Facewash",
+    slug: "facewash",
+    status: "active",
+    bannerImage: "/facewash_banner.png",
+    categoryImage: "/facewash_category.png",
+  },
+  {
     id: 1,
     name: "Shampoo",
     slug: "shampoo",
-    status: "active",
+    status: "coming-soon",
     bannerImage: "/shampoo_banner.png",
     categoryImage: "/shampoo_category.png",
   },
