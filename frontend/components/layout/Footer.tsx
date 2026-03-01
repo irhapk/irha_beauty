@@ -4,15 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { motion } from "framer-motion";
-import {
-  FaFacebook,
-  FaInstagram,
-  FaPinterest,
-  FaWhatsapp,
-} from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
+import { FiPhone } from "react-icons/fi";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { ScrollReveal, scrollItemVariants } from "@/components/animations";
 
 const QUICK_LINKS = [
@@ -23,16 +17,15 @@ const QUICK_LINKS = [
 ] as const;
 
 const CATEGORY_LINKS = [
+  { href: "/categories/facewash", label: "Facewash" },
   { href: "/categories/shampoo", label: "Shampoo" },
   { href: "/categories/oils", label: "Hair Oils" },
   { href: "/categories/fragrance", label: "Fragrance" },
 ] as const;
 
 const SOCIALS = [
-  { href: "#", icon: FaInstagram, label: "Instagram" },
-  { href: "#", icon: FaFacebook, label: "Facebook" },
-  { href: "#", icon: FaWhatsapp, label: "WhatsApp" },
-  { href: "#", icon: FaPinterest, label: "Pinterest" },
+  { href: "https://www.instagram.com/irhapk/", icon: FaInstagram, label: "Instagram" },
+  { href: "tel:+923121007112", icon: FiPhone, label: "Phone" },
 ] as const;
 
 export function Footer() {
@@ -109,25 +102,6 @@ export function Footer() {
                   <Icon className="h-5 w-5" />
                 </a>
               ))}
-            </div>
-            <div>
-              <p className="mb-3 text-sm text-gray-light">Stay updated</p>
-              <form
-                className="flex flex-col gap-2 sm:flex-row"
-                onSubmit={(e) => e.preventDefault()}
-              >
-                <Input
-                  type="email"
-                  placeholder="Your email"
-                  className="border-white/20 bg-white/10 text-white placeholder:text-gray-light focus-visible:ring-gold"
-                />
-                <Button
-                  type="submit"
-                  className="shrink-0 bg-gold text-black hover:bg-gold/90"
-                >
-                  Subscribe
-                </Button>
-              </form>
             </div>
           </motion.div>
         </ScrollReveal>

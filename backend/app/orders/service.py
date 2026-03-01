@@ -10,7 +10,7 @@ from app.users.models import User
 async def create_order(
     db: AsyncSession,
     data: CreateOrderRequest,
-    current_user: User | None,
+    current_user: User,
 ) -> OrderRead:
     # Validate all product IDs exist before inserting anything
     for item in data.items:
@@ -22,8 +22,7 @@ async def create_order(
                 status_code=404,
             )
 
-    user_id = current_user.id if current_user is not None else None
-    order = await repository.create_order(db, data, user_id)
+    order = await repository.create_order(db, data, current_user.id)
     return OrderRead.model_validate(order)
 
 

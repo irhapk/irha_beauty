@@ -15,6 +15,7 @@ from app.core.database import Base
 
 if TYPE_CHECKING:
     from app.orders.models import OrderItem
+    from app.products.models import Product
 
 
 class Order(Base):
@@ -25,6 +26,7 @@ class Order(Base):
         ForeignKey("users.id", ondelete="SET NULL"), nullable=True
     )
     customer_name: Mapped[str] = mapped_column(String(150), nullable=False)
+    email: Mapped[str] = mapped_column(String(255), nullable=False, server_default="")
     address: Mapped[str] = mapped_column(String(300), nullable=False)
     city: Mapped[str] = mapped_column(String(100), nullable=False)
     phone: Mapped[str] = mapped_column(String(20), nullable=False)
@@ -58,3 +60,8 @@ class OrderItem(Base):
     unit_price: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
 
     order: Mapped["Order"] = relationship(back_populates="items")
+    product: Mapped["Product"] = relationship(lazy="selectin")
+
+    @property
+    def product_name(self) -> str:
+        return self.product.name if self.product else ""

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { motion } from "framer-motion";
-import { FiPackage, FiRefreshCw } from "react-icons/fi";
+import { FiLoader, FiPackage, FiRefreshCw } from "react-icons/fi";
 
 import { FadeIn, ScrollReveal, scrollItemVariants } from "@/components/animations";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -86,7 +86,14 @@ export default function AdminOrdersPage() {
     }
   }
 
-  if (authLoading || !isAdmin) return <></>;
+  if (authLoading) return (
+    <main className="flex min-h-screen items-center justify-center pt-20">
+      <FiLoader className="h-8 w-8 animate-spin text-gold" />
+    </main>
+  );
+
+  if (!isAdmin) return <></>;
+
 
   return (
     <main className="pt-20">
@@ -137,16 +144,23 @@ export default function AdminOrdersPage() {
                       {order.customer_name}
                     </p>
                     <p className="text-sm text-gray-mid">
+                      {order.email}
+                    </p>
+                    <p className="text-sm text-gray-mid">
                       {order.city} · {order.phone}
                     </p>
                     <p className="text-xs text-gray-mid">
                       {formatDate(order.created_at)}
                     </p>
-                    <p className="text-xs text-gray-mid">
-                      {order.items.length} item{order.items.length !== 1 && "s"} ·{" "}
-                      <span className="font-medium text-gold">
-                        {formatPrice(order.total_amount)}
-                      </span>
+                    <div className="space-y-0.5">
+                      {order.items.map((item, i) => (
+                        <p key={i} className="text-xs text-gray-mid">
+                          {item.product_name} × {item.quantity}
+                        </p>
+                      ))}
+                    </div>
+                    <p className="text-xs font-medium text-gold">
+                      {formatPrice(order.total_amount)}
                     </p>
                   </div>
 

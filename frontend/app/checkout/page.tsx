@@ -12,14 +12,21 @@ import { FiCheckCircle, FiShoppingBag } from "react-icons/fi";
 import { FadeIn } from "@/components/animations";
 import { CheckoutForm } from "@/components/checkout";
 import { formatPrice, BLUR_DATA_URL, DELIVERY_CHARGE } from "@/lib/utils";
-import { useCartStore, useCartTotal } from "@/store";
+import { useAuthStore, useCartStore, useCartTotal } from "@/store";
 
 export default function CheckoutPage(): React.ReactElement {
   const router = useRouter();
   const items = useCartStore((s) => s.items);
   const total = useCartTotal();
+  const { isAuthenticated, isLoading: authLoading } = useAuthStore();
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [grandTotal, setGrandTotal] = useState(0);
+
+  useEffect(() => {
+    if (!authLoading && !isAuthenticated) {
+      router.replace("/login?next=/checkout");
+    }
+  }, [isAuthenticated, authLoading, router]);
 
   useEffect(() => {
     if (items.length === 0 && !orderPlaced) {
@@ -27,6 +34,7 @@ export default function CheckoutPage(): React.ReactElement {
     }
   }, [items.length, orderPlaced, router]);
 
+  if (authLoading || !isAuthenticated) return <></>;
   if (items.length === 0 && !orderPlaced) return <></>;
 
   if (orderPlaced) {
