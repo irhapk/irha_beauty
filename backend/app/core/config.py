@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
     ENVIRONMENT: str = "dev"
+    ADMIN_EMAIL: str = "info.irhabeauty@gmail.com"
 
 
 settings = Settings()

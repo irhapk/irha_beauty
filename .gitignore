@@ -4,6 +4,7 @@ __pycache__/
 *.pyo
 *.pyd
 .venv/
+.venv*/
 venv/
 env/
 *.egg-info/
@@ -32,3 +33,6 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Debug / scratch scripts
+test_sa.py

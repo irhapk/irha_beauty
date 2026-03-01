@@ -4,6 +4,7 @@ import jwt
 from fastapi import Depends, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.config import settings
 from app.core.database import AsyncSessionLocal
 from app.core.exceptions import AppException
 from app.core.security import decode_access_token
@@ -47,5 +48,18 @@ async def get_current_user(
             detail="Not authenticated",
             code="NOT_AUTHENTICATED",
             status_code=401,
+        )
+    return user
+
+
+async def get_admin_user(
+    request: Request, db: AsyncSession = Depends(get_db)
+):
+    user = await get_current_user(request, db)
+    if user.email != settings.ADMIN_EMAIL:
+        raise AppException(
+            detail="Admin access required",
+            code="FORBIDDEN",
+            status_code=403,
         )
     return user
