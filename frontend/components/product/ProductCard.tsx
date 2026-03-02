@@ -49,6 +49,7 @@ export function ProductCard({ product }: ProductCardProps) {
             src={product.image}
             alt={product.name}
             fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             placeholder="blur"
             blurDataURL={BLUR_DATA_URL}
             className="object-cover transition-opacity duration-500 group-hover:opacity-0"
@@ -58,6 +59,7 @@ export function ProductCard({ product }: ProductCardProps) {
             src={product.hoverImage}
             alt={`${product.name} — alternate view`}
             fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             placeholder="blur"
             blurDataURL={BLUR_DATA_URL}
             className="object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"

@@ -68,6 +68,7 @@ export default async function CategoryPage({
           alt={category.name}
           fill
           priority
+          sizes="100vw"
           placeholder="blur"
           blurDataURL={BLUR_DATA_URL}
           className="object-cover"

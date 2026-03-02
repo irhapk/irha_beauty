@@ -51,6 +51,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
                 alt={product.name}
                 fill
                 priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 placeholder="blur"
                 blurDataURL={BLUR_DATA_URL}
                 className="object-cover transition-opacity duration-500"
@@ -73,6 +74,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
                       src={src}
                       alt={`${product.name} view ${i + 1}`}
                       fill
+                      sizes="64px"
                       placeholder="blur"
                       blurDataURL={BLUR_DATA_URL}
                       className="object-cover"

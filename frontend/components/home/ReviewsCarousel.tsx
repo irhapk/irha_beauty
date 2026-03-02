@@ -124,6 +124,7 @@ export function ReviewsCarousel() {
                     src={review.image}
                     alt={review.name}
                     fill
+                    sizes="64px"
                     placeholder="blur"
                     blurDataURL={BLUR_DATA_URL}
                     className="object-cover"

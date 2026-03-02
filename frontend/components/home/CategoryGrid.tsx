@@ -47,6 +47,7 @@ export function CategoryGrid({ categories }: CategoryGridProps) {
                     src={cat.categoryImage}
                     alt={cat.name}
                     fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     placeholder="blur"
                     blurDataURL={BLUR_DATA_URL}
                     className={`object-cover transition-transform duration-700 group-hover:scale-105 ${cat.status === "coming-soon" ? "brightness-75" : ""}`}

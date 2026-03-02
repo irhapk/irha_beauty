@@ -79,6 +79,7 @@ export function HeroCarousel() {
             alt={slide.headline}
             fill
             priority
+            sizes="100vw"
             placeholder="blur"
             blurDataURL={BLUR_DATA_URL}
             className="object-cover"

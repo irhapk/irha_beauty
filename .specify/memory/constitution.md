@@ -1,8 +1,8 @@
 # Irha Beauty — Full-Stack Constitution
 
-**Version**: v4.0.0
+**Version**: v4.1.0
 **Ratified**: 2026-02-28
-**Amended**: 2026-02-28 — Phase 4: Frontend added (Next.js 15)
+**Amended**: 2026-03-02 — Deployment updated: Vercel (frontend) + Railway (backend) + irhapk.com domain; GitHub repo migrated to irhapk/irha_beauty
 
 ---
 
@@ -260,8 +260,9 @@ These are deferred to Phase 4+.
 - **Styling**: Tailwind CSS v3 + shadcn/ui component library
 - **Animations**: Framer Motion — **mandatory on every visible element**
 - **Icons**: React Icons
-- **Deployment**: Vercel
-- **API**: FastAPI backend at `NEXT_PUBLIC_API_URL` (env var)
+- **Deployment**: Vercel (frontend) + Railway (backend)
+- **Domain**: `irhapk.com` via Namecheap DNS → CNAME to Vercel
+- **API**: FastAPI backend at `NEXT_PUBLIC_API_URL` (env var); production: Railway URL
 - **Reference Design**: premiumwallartstudio.com — luxury ecommerce aesthetic
 
 ---
@@ -280,7 +281,9 @@ These are deferred to Phase 4+.
 | HTTP Client | Axios | Centralized instance with interceptors |
 | Fonts | Cormorant Garamond (headings) + Instrument Sans (body) | via next/font/google |
 | Images | next/image | Required for all images — no raw `<img>` tags |
-| Deployment | Vercel | Environment variables in Vercel dashboard |
+| Frontend Hosting | Vercel | Env vars in Vercel dashboard; auto-deploy from `irhapk/irha_beauty` |
+| Backend Hosting | Railway | FastAPI, Python 3.12; auto-deploy from `irhapk/irha_beauty` |
+| Domain | `irhapk.com` via Namecheap | DNS CNAME → Vercel; Railway subdomain for API |
 
 ---
 
@@ -548,4 +551,4 @@ Every rule below is non-negotiable:
 - Amendments require: a proposed change, ratification note, and version bump.
 - All specs, plans, tasks, and code reviews must cite compliance with this constitution.
 
-**Version**: v4.0.0 | **Ratified**: 2026-02-28 | **Last Amended**: 2026-02-28
+**Version**: v4.1.0 | **Ratified**: 2026-02-28 | **Last Amended**: 2026-03-02 — Deployment updated: Vercel + Railway + irhapk.com; GitHub repo: irhapk/irha_beauty

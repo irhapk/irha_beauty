@@ -32,8 +32,8 @@ const CONTACT_ITEMS: ContactItem[] = [
   {
     icon: FiMail,
     label: "Email",
-    value: "info.irhabeauty@gmail.com",
-    href: "mailto:info.irhabeauty@gmail.com",
+    value: "info.irhapk0@gmail.com",
+    href: "mailto:info.irhapk0@gmail.com",
   },
 ];
 

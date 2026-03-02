@@ -221,6 +221,9 @@ A curious visitor navigates to the About page to learn the Irha Beauty brand sto
 - Guest checkout is NOT supported — users must be logged in to place an order.
 - Wishlist is client-side only (localStorage) — no backend persistence in this phase.
 - The brand logo image (`logo.png`), all banner images, and all product/category images will be provided by the client and placed in the application's static assets folder before or during development.
+- **Production hosting**: Frontend on Vercel (auto-deploy from `irhapk/irha_beauty`); backend on Railway (FastAPI, Python 3.12, auto-deploy from `irhapk/irha_beauty`).
+- **Production domain**: `irhapk.com` via Namecheap DNS → CNAME to Vercel; backend served from Railway-assigned URL.
+- **Database**: NeonDB serverless PostgreSQL — connection string provided via Railway env var `DATABASE_URL` (production) and `backend/.env` (local).
 
 ---
 

@@ -83,28 +83,44 @@ interface OrderItem {
   unit_price: number
 }
 
+interface OrderItemIn {
+  product_id: number
+  quantity: number
+  unit_price: number
+}
+
+// Read schema — returned by API, includes product name
+interface OrderItemRead {
+  product_id: number
+  product_name: string    // joined from products table
+  quantity: number
+  unit_price: number
+}
+
 interface CreateOrderPayload {
   customer_name: string
+  email: string
   address: string
   city: string
   phone: string
-  items: OrderItem[]
+  items: OrderItemIn[]
   payment_method: "cod"
   total_amount: number
 }
 
 interface Order {
   id: number
+  user_id: number | null
   customer_name: string
+  email: string
   address: string
   city: string
   phone: string
-  items: OrderItem[]
+  items: OrderItemRead[]   // includes product_name
   payment_method: string
   total_amount: number
   status: "pending" | "processing" | "delivered" | "cancelled"
   created_at: string
-  user_id: number | null  // null for guest orders
 }
 ```
 
@@ -133,6 +149,7 @@ interface Slide {
 id              SERIAL PRIMARY KEY
 user_id         INTEGER NULLABLE → FK users(id) ON DELETE SET NULL
 customer_name   VARCHAR(150) NOT NULL
+email           VARCHAR(255) NOT NULL
 address         VARCHAR(300) NOT NULL
 city            VARCHAR(100) NOT NULL
 phone           VARCHAR(20)  NOT NULL
@@ -150,6 +167,7 @@ product_id  INTEGER NOT NULL → FK products(id) ON DELETE RESTRICT
 quantity    INTEGER NOT NULL CHECK (quantity > 0)
 unit_price  NUMERIC(10,2) NOT NULL
 ```
+Note: `product_name` is NOT stored — it is joined from `products.name` at query time via SQLAlchemy relationship (`lazy="selectin"`) and exposed as a `@property` on the `OrderItem` model.
 
 **Alembic migration**: `add_orders_and_order_items`
 
