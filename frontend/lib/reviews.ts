@@ -12,7 +12,7 @@ export const REVIEWS: Review[] = [
     designation: "AI Engineer",
     image: "/anus_butt(AI_Engineer).jpeg",
     rating: 5,
-    text: "Irha's Oil Control Facewash has completely transformed my skincare routine. As someone with oily skin, I've tried countless products — nothing comes close. The Vitamin E formula is gentle yet powerful, and my skin stays matte and fresh all day. Absolutely love it!",
+    text: "Irha Oil Control Facewash has completely transformed my skincare routine. As someone with oily skin, I've tried countless products — nothing comes close. The Vitamin E formula is gentle yet powerful, and my skin stays matte and fresh all day. Absolutely love it!",
   },
   {
     name: "Furqan Tufail",

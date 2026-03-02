@@ -41,7 +41,7 @@ export const STATIC_CATEGORIES: Category[] = [
 export const FEATURED_PRODUCTS: Product[] = [
   {
     id: 1,
-    name: "Irha's Oil Control Facewash",
+    name: "Irha Oil Control Facewash",
     slug: "oil-control-facewash",
     description:
       "Advanced oil control facewash enriched with Vitamin E. Deeply cleanses pores, eliminates excess sebum, and keeps skin fresh and matte all day. Infused with natural botanical extracts for a gentle yet powerful cleanse that leaves skin balanced, smooth, and radiant.",
