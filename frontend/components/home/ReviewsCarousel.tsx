@@ -127,7 +127,7 @@ export function ReviewsCarousel() {
                     sizes="64px"
                     placeholder="blur"
                     blurDataURL={BLUR_DATA_URL}
-                    className="object-cover"
+                    className="object-cover object-top"
                   />
                 </div>
                 <div>
