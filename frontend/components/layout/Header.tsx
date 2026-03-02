@@ -283,7 +283,7 @@ export function Header() {
               alt="Irha PK"
               width={36}
               height={36}
-              className="rounded-full object-cover"
+              className="rounded-full object-cover bg-black p-1"
             />
             <span className="font-heading text-2xl font-semibold tracking-[0.12em] text-black transition-colors hover:text-gold md:text-3xl">
               Irha<span className="text-base font-medium md:text-lg">pk</span>
