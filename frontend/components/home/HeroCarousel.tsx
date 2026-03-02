@@ -55,7 +55,7 @@ export function HeroCarousel() {
 
   return (
     <section
-      className="relative mt-[104px] min-h-[calc(100vh-104px)] overflow-hidden"
+      className="relative mt-[120px] min-h-[calc(100vh-120px)] overflow-hidden"
       onMouseEnter={() => {
         isPaused.current = true;
       }}
