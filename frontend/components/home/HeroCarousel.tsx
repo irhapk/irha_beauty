@@ -55,7 +55,7 @@ export function HeroCarousel() {
 
   return (
     <section
-      className="relative mt-36 min-h-screen overflow-hidden"
+      className="relative min-h-screen overflow-hidden"
       onMouseEnter={() => {
         isPaused.current = true;
       }}
@@ -87,7 +87,7 @@ export function HeroCarousel() {
           <div className="absolute inset-0 bg-black/50" />
 
           {/* Text content — offset below fixed header (~104px) */}
-          <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
+          <div className="absolute inset-x-0 bottom-0 top-[104px] flex items-center justify-center px-6 text-center">
             <div className="max-w-3xl space-y-6">
               <motion.p
                 initial={{ opacity: 0, y: 30 }}
