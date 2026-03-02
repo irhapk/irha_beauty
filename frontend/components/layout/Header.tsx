@@ -286,7 +286,7 @@ export function Header() {
               className="rounded-full object-cover"
             />
             <span className="font-heading text-2xl font-semibold tracking-[0.12em] text-black transition-colors hover:text-gold md:text-3xl">
-              Irha PK
+              Irha<span className="text-base font-medium md:text-lg">pk</span>
             </span>
           </Link>
 
