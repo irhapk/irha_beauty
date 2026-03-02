@@ -14,6 +14,8 @@ class Settings(BaseSettings):
     ENVIRONMENT: str = "dev"
     ADMIN_EMAIL: str = "info.irhapk0@gmail.com"
     CORS_ORIGINS: str = "http://localhost:3000"
+    RESEND_API_KEY: str = ""
+    EMAIL_FROM: str = "noreply@irhapk.com"
 
 
 settings = Settings()

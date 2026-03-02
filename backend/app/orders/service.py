@@ -1,5 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core import email as email_service
 from app.core.exceptions import AppException
 from app.orders import repository
 from app.orders.schemas import CreateOrderRequest, OrderRead
@@ -23,6 +24,8 @@ async def create_order(
             )
 
     order = await repository.create_order(db, data, current_user.id)
+    await email_service.send_admin_order_notification(order)
+    await email_service.send_customer_order_confirmation(order)
     return OrderRead.model_validate(order)
 
 
@@ -46,4 +49,5 @@ async def update_order_status(
             code="ORDER_NOT_FOUND",
             status_code=404,
         )
+    await email_service.send_order_status_update(order)
     return OrderRead.model_validate(order)

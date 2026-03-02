@@ -1,8 +1,9 @@
 # Irha Beauty — Full-Stack Constitution
 
-**Version**: v4.2.0
+**Version**: v4.3.0
 **Ratified**: 2026-02-28
-**Amended**: 2026-03-02 — Phase 6: Backend schema extended — categories and products carry slug, image, status, banner_image fields. Static data bridge retired from pages (remains as mapper fallback only). GitHub repo: irhapk/irha_beauty; Deployment: Vercel + Railway + irhapk.com
+**Amended**: 2026-03-03 — Phase 9: Transactional email via Resend. Admin notified on new order; customer receives order confirmation and status-change updates. Sender: noreply@irhapk.com (Resend domain-verified). Email is best-effort — order operations never fail due to email errors.
+**Previously amended**: 2026-03-02 — Phase 6: Backend schema extended — categories and products carry slug, image, status, banner_image fields. Static data bridge retired from pages (remains as mapper fallback only). GitHub repo: irhapk/irha_beauty; Deployment: Vercel + Railway + irhapk.com
 
 ---
 
@@ -14,6 +15,7 @@
 - **Backend Phase 3** ✅ Complete — JWT auth in httpOnly cookies, bcrypt, register/login/logout/refresh/me
 - **Frontend Phase 4** ✅ Complete — Next.js 15 storefront (black/white/gold luxury theme)
 - **Phase 6** ✅ Complete — Backend schema extended: categories/products carry slug, image, status, banner_image; static data bridge retired from pages
+- **Phase 9** 🔄 In Progress — Transactional email via Resend: admin order notifications + customer confirmations + status-change updates
 - **Goal**: Layered, domain-driven architecture on the backend. Animated, luxury ecommerce experience on the frontend.
 
 ---
@@ -35,6 +37,7 @@
 | Password hashing | passlib[bcrypt] | 3 |
 | JWT | PyJWT[cryptography] | 3 |
 | Token transport | httpOnly cookies (Secure, SameSite=Lax) | 3 |
+| Email | Resend Python SDK (`resend`) | 9 |
 
 ---
 
@@ -160,6 +163,9 @@ Updated for Phase 2 — four layers:
   - `JWT_ALGORITHM` — `HS256`
   - `ACCESS_TOKEN_EXPIRE_MINUTES` — e.g. `30`
   - `REFRESH_TOKEN_EXPIRE_DAYS` — e.g. `7`
+- **Phase 9 adds** to required `.env` variables:
+  - `RESEND_API_KEY` — API key from resend.com dashboard (starts with `re_`)
+  - `EMAIL_FROM` — verified sender address, e.g. `noreply@irhapk.com`
 
 ---
 
@@ -552,4 +558,4 @@ Every rule below is non-negotiable:
 - Amendments require: a proposed change, ratification note, and version bump.
 - All specs, plans, tasks, and code reviews must cite compliance with this constitution.
 
-**Version**: v4.2.0 | **Ratified**: 2026-02-28 | **Last Amended**: 2026-03-02 — Phase 6: Backend schema extended (slug, image, status, banner_image on categories + products). Static data bridge retired from pages. Vercel + Railway + irhapk.com; GitHub: irhapk/irha_beauty
+**Version**: v4.3.0 | **Ratified**: 2026-02-28 | **Last Amended**: 2026-03-03 — Phase 9: Transactional email via Resend (admin notifications + customer confirmations + status updates). Sender: noreply@irhapk.com.

@@ -1,11 +1,13 @@
-import pytest
+from unittest.mock import AsyncMock, patch
+
 import httpx
+import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.categories.schemas import CategoryCreate
 from app.categories import service as category_service
-from app.products.schemas import ProductCreate
+from app.categories.schemas import CategoryCreate
 from app.products import service as product_service
+from app.products.schemas import ProductCreate
 
 
 # ---------------------------------------------------------------------------
@@ -63,6 +65,36 @@ async def _register_and_login(async_client: httpx.AsyncClient) -> None:
     )
 
 
+async def _register_and_login_admin(async_client: httpx.AsyncClient) -> None:
+    """Register + login as the admin user (ADMIN_EMAIL)."""
+    await async_client.post(
+        "/api/v1/auth/register",
+        json={
+            "full_name": "Admin",
+            "email": "info.irhapk0@gmail.com",
+            "password": "Password1!",
+        },
+    )
+    await async_client.post(
+        "/api/v1/auth/login",
+        json={"email": "info.irhapk0@gmail.com", "password": "Password1!"},
+    )
+
+
+# Convenience context manager: patch both order-creation email sends
+def _mock_order_emails():
+    return (
+        patch(
+            "app.orders.service.email_service.send_admin_order_notification",
+            new_callable=AsyncMock,
+        ),
+        patch(
+            "app.orders.service.email_service.send_customer_order_confirmation",
+            new_callable=AsyncMock,
+        ),
+    )
+
+
 # ---------------------------------------------------------------------------
 # Tests
 # ---------------------------------------------------------------------------
@@ -89,12 +121,32 @@ async def test_create_order_authenticated(
     product = await _seed_product(db_session)
     payload = _order_payload(product["product_id"], product["unit_price"])
 
-    response = await async_client.post("/api/v1/orders", json=payload)
+    mock_admin, mock_customer = _mock_order_emails()
+    with mock_admin, mock_customer:
+        response = await async_client.post("/api/v1/orders", json=payload)
 
     assert response.status_code == 201
     body = response.json()
     assert body["user_id"] is not None
     assert body["customer_name"] == "Test Customer"
+
+
+@pytest.mark.asyncio
+async def test_create_order_sends_both_emails(
+    async_client: httpx.AsyncClient, db_session: AsyncSession
+) -> None:
+    """POST /orders → both admin notification and customer confirmation are sent."""
+    await _register_and_login(async_client)
+    product = await _seed_product(db_session)
+    payload = _order_payload(product["product_id"], product["unit_price"])
+
+    mock_admin_patch, mock_customer_patch = _mock_order_emails()
+    with mock_admin_patch as mock_admin, mock_customer_patch as mock_customer:
+        response = await async_client.post("/api/v1/orders", json=payload)
+
+    assert response.status_code == 201
+    mock_admin.assert_called_once()
+    mock_customer.assert_called_once()
 
 
 @pytest.mark.asyncio
@@ -106,8 +158,9 @@ async def test_get_my_orders_authenticated(
     product = await _seed_product(db_session)
     payload = _order_payload(product["product_id"], product["unit_price"])
 
-    # Place an order first
-    await async_client.post("/api/v1/orders", json=payload)
+    mock_admin, mock_customer = _mock_order_emails()
+    with mock_admin, mock_customer:
+        await async_client.post("/api/v1/orders", json=payload)
 
     response = await async_client.get("/api/v1/orders/my")
 
@@ -126,3 +179,36 @@ async def test_get_my_orders_unauthenticated(
 
     assert response.status_code == 401
     assert response.json()["code"] == "NOT_AUTHENTICATED"
+
+
+@pytest.mark.asyncio
+async def test_update_order_status_sends_email(
+    async_client: httpx.AsyncClient, db_session: AsyncSession
+) -> None:
+    """PATCH /orders/{id}/status → send_order_status_update is called."""
+    # Create order as regular user
+    await _register_and_login(async_client)
+    product = await _seed_product(db_session)
+    payload = _order_payload(product["product_id"], product["unit_price"])
+
+    mock_admin, mock_customer = _mock_order_emails()
+    with mock_admin, mock_customer:
+        create_resp = await async_client.post("/api/v1/orders", json=payload)
+    order_id = create_resp.json()["id"]
+
+    # Logout regular user, login as admin
+    await async_client.post("/api/v1/auth/logout")
+    await _register_and_login_admin(async_client)
+
+    with patch(
+        "app.orders.service.email_service.send_order_status_update",
+        new_callable=AsyncMock,
+    ) as mock_status:
+        response = await async_client.patch(
+            f"/api/v1/orders/{order_id}/status",
+            json={"status": "processing"},
+        )
+
+    assert response.status_code == 200
+    assert response.json()["status"] == "processing"
+    mock_status.assert_called_once()
