@@ -311,15 +311,23 @@ export function Header() {
               </div>
             )}
 
-            {/* Orders icon — desktop only, authenticated */}
+            {/* Orders + Logout — desktop only, authenticated */}
             {isAuthenticated && user && (
-              <Link
-                href="/orders"
-                aria-label="My orders"
-                className="hidden h-10 w-10 items-center justify-center text-black transition-colors hover:text-gold md:flex"
-              >
-                <FiPackage className="h-5 w-5" />
-              </Link>
+              <div className="mr-2 hidden items-center gap-2 md:flex">
+                <Link
+                  href="/orders"
+                  aria-label="My orders"
+                  className="flex h-10 w-10 items-center justify-center text-black transition-colors hover:text-gold"
+                >
+                  <FiPackage className="h-5 w-5" />
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="rounded-sm border border-black px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-black transition-all hover:border-gold hover:text-gold"
+                >
+                  Logout
+                </button>
+              </div>
             )}
 
             <WishlistIcon />
