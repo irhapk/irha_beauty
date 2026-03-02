@@ -6,6 +6,10 @@ from pydantic import BaseModel, ConfigDict, field_validator
 class CategoryCreate(BaseModel):
     name: str
     description: str = ""
+    slug: str = ""
+    status: str = "active"
+    banner_image: str = ""
+    category_image: str = ""
 
     @field_validator("name")
     @classmethod
@@ -27,6 +31,10 @@ class CategoryCreate(BaseModel):
 class CategoryUpdate(BaseModel):
     name: str | None = None
     description: str | None = None
+    slug: str | None = None
+    status: str | None = None
+    banner_image: str | None = None
+    category_image: str | None = None
 
     @field_validator("name")
     @classmethod
@@ -52,4 +60,8 @@ class CategoryRead(BaseModel):
     id: int
     name: str
     description: str
+    slug: str
+    status: str
+    banner_image: str
+    category_image: str
     created_at: datetime

@@ -16,6 +16,9 @@ class Product(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(200), nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=False, server_default="")
+    slug: Mapped[str] = mapped_column(String(220), nullable=False, server_default="")
+    image: Mapped[str] = mapped_column(String(500), nullable=False, server_default="")
+    hover_image: Mapped[str] = mapped_column(String(500), nullable=False, server_default="")
     price: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
     stock: Mapped[int] = mapped_column(Integer, nullable=False, server_default="0")
     category_id: Mapped[int] = mapped_column(

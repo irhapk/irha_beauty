@@ -187,9 +187,11 @@ export function Header() {
           )}
         </div>
 
-        {/* Mobile hamburger */}
-        <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-          <SheetTrigger asChild className="md:hidden">
+        {/* Mobile cart + hamburger */}
+        <div className="flex items-center gap-1 md:hidden">
+          <CartIcon />
+          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+          <SheetTrigger asChild>
             <button aria-label="Open navigation menu" className="p-2.5 -mr-2.5 text-white">
               <FiMenu className="h-6 w-6" />
             </button>
@@ -238,7 +240,6 @@ export function Header() {
               <div className="flex flex-col gap-1 border-t border-white/10 pt-4 mt-2">
                 <div className="flex gap-5 py-2">
                   <WishlistIcon />
-                  <CartIcon />
                 </div>
                 {isAuthenticated && user ? (
                   <>
@@ -287,6 +288,7 @@ export function Header() {
             </nav>
           </SheetContent>
         </Sheet>
+        </div>
       </div>
     </header>
   );

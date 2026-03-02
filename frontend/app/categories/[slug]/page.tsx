@@ -6,13 +6,30 @@ import type { Metadata } from "next";
 import { FadeIn } from "@/components/animations";
 import { ComingSoon } from "@/components/product/ComingSoon";
 import { ProductGrid } from "@/components/product/ProductGrid";
-import { enrichProducts, type BackendProduct } from "@/lib/product-mapper";
+import {
+  enrichCategories,
+  enrichProducts,
+  type BackendCategory,
+  type BackendProduct,
+} from "@/lib/product-mapper";
 import { BLUR_DATA_URL } from "@/lib/utils";
 import { FEATURED_PRODUCTS, STATIC_CATEGORIES } from "@/lib/static-data";
-import type { Product } from "@/types";
+import type { Category, Product } from "@/types";
 
 export function generateStaticParams() {
   return STATIC_CATEGORIES.map((c) => ({ slug: c.slug }));
+}
+
+async function getCategoryBySlug(slug: string): Promise<Category | undefined> {
+  try {
+    const base = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+    const res = await fetch(`${base}/api/v1/categories`, { next: { revalidate: 60 } });
+    if (res.ok) {
+      const data: BackendCategory[] = await res.json();
+      return enrichCategories(data).find((c) => c.slug === slug);
+    }
+  } catch {}
+  return STATIC_CATEGORIES.find((c) => c.slug === slug);
 }
 
 export async function generateMetadata({
@@ -21,7 +38,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const category = STATIC_CATEGORIES.find((c) => c.slug === slug);
+  const category = await getCategoryBySlug(slug);
   if (!category) return { title: "Category" };
   return {
     title: category.name,
@@ -50,7 +67,7 @@ export default async function CategoryPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const category = STATIC_CATEGORIES.find((c) => c.slug === slug);
+  const category = await getCategoryBySlug(slug);
   if (!category) notFound();
 
   if (category.status === "coming-soon") {

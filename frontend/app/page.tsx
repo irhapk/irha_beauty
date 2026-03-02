@@ -5,17 +5,51 @@ import {
   ReviewsCarousel,
   TopProduct,
 } from "@/components/home";
+import {
+  enrichCategories,
+  enrichProducts,
+  type BackendCategory,
+  type BackendProduct,
+} from "@/lib/product-mapper";
 import { FEATURED_PRODUCTS, STATIC_CATEGORIES } from "@/lib/static-data";
 
-// Server Component — renders homepage sections with static curated data.
-// Backend API (fetchProducts/fetchCategories) will be integrated once the
-// backend schema includes slug, image, and status fields (Phase 6+).
-export default function Home() {
+async function getLiveCategories() {
+  try {
+    const base = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+    const res = await fetch(`${base}/api/v1/categories`, { next: { revalidate: 60 } });
+    if (res.ok) {
+      const data: BackendCategory[] = await res.json();
+      const enriched = enrichCategories(data);
+      if (enriched.length > 0) return enriched;
+    }
+  } catch {}
+  return STATIC_CATEGORIES;
+}
+
+async function getLiveProducts() {
+  try {
+    const base = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+    const res = await fetch(`${base}/api/v1/products`, { next: { revalidate: 60 } });
+    if (res.ok) {
+      const data: BackendProduct[] = await res.json();
+      const enriched = enrichProducts(data);
+      if (enriched.length > 0) return enriched;
+    }
+  } catch {}
+  return FEATURED_PRODUCTS;
+}
+
+export default async function Home() {
+  const [categories, products] = await Promise.all([
+    getLiveCategories(),
+    getLiveProducts(),
+  ]);
+
   return (
     <main>
       <HeroCarousel />
-      <CategoryGrid categories={STATIC_CATEGORIES} />
-      <FeaturedProducts products={FEATURED_PRODUCTS} />
+      <CategoryGrid categories={categories} />
+      <FeaturedProducts products={products} />
       <TopProduct />
       <ReviewsCarousel />
     </main>
