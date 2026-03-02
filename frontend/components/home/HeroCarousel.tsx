@@ -62,7 +62,21 @@ export function HeroCarousel() {
           exit="exit"
           className="relative w-full"
         >
-          {/* Image — full width, height auto so full image always shows */}
+          {/* ── Mobile: full-screen height, object-cover ── */}
+          <div className="relative h-[85vh] w-full md:hidden">
+            <Image
+              src={slide.bannerImage}
+              alt={slide.headline}
+              fill
+              priority
+              sizes="100vw"
+              placeholder="blur"
+              blurDataURL={BLUR_DATA_URL}
+              className="object-cover object-center"
+            />
+          </div>
+
+          {/* ── Desktop: natural height, full image shown (DO NOT TOUCH) ── */}
           <Image
             src={slide.bannerImage}
             alt={slide.headline}
@@ -71,11 +85,13 @@ export function HeroCarousel() {
             priority
             placeholder="blur"
             blurDataURL={BLUR_DATA_URL}
-            className="w-full h-auto"
+            className="hidden w-full h-auto md:block"
           />
+
+          {/* Overlay */}
           <div className="absolute inset-0 bg-black/50" />
 
-          {/* Text content — centered over the image */}
+          {/* Text content */}
           <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
             <div className="max-w-3xl space-y-6">
               <motion.p
