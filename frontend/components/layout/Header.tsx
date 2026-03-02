@@ -279,7 +279,7 @@ export function Header() {
             className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2.5 whitespace-nowrap"
           >
             <Image
-              src="/logo.jpeg"
+              src="/logo.png"
               alt="Irha PK"
               width={36}
               height={36}
