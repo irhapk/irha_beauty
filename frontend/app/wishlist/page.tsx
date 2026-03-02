@@ -19,7 +19,7 @@ export default function WishlistPage() {
 
   if (items.length === 0) {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-center px-6 pt-20 text-center">
+      <main className="flex min-h-screen flex-col items-center justify-center px-6 pt-36 text-center">
         <FadeIn className="space-y-6">
           <FiHeart className="mx-auto h-16 w-16 text-gray-200" />
           <div>
@@ -42,7 +42,7 @@ export default function WishlistPage() {
   }
 
   return (
-    <main className="pt-20">
+    <main className="pt-36">
       <div className="mx-auto max-w-[1470px] px-6 py-16">
         <FadeIn className="mb-10">
           <h1 className="font-heading text-4xl font-light">Wishlist</h1>

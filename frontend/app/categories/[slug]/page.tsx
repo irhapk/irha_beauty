@@ -77,7 +77,7 @@ export default async function CategoryPage({
   const products = await getProductsByCategory(slug);
 
   return (
-    <main className="pt-20">
+    <main className="pt-36">
       {/* Banner */}
       <div className="relative h-64 overflow-hidden md:h-80">
         <Image

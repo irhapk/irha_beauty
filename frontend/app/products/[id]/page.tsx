@@ -47,7 +47,7 @@ export default async function ProductPage({
   if (!product) notFound();
 
   return (
-    <main className="pt-20">
+    <main className="pt-36">
       {/* Breadcrumb */}
       <div className="mx-auto max-w-[1470px] px-6 pt-6">
         <nav className="flex gap-2 text-xs text-gray-mid">

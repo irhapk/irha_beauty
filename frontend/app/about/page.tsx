@@ -35,7 +35,7 @@ const VALUES: Value[] = [
 
 export default function AboutPage(): React.ReactElement {
   return (
-    <main className="pt-20">
+    <main className="pt-36">
       {/* Hero */}
       <div className="relative h-[70vh] overflow-hidden">
         <Image

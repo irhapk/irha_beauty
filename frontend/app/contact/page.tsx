@@ -43,7 +43,7 @@ const SOCIAL_LINKS: SocialLink[] = [
 
 export default function ContactPage(): React.ReactElement {
   return (
-    <main className="pt-20">
+    <main className="pt-36">
       <div className="mx-auto max-w-[1470px] px-6 py-16">
         <FadeIn className="mb-16 text-center">
           <p className="text-xs uppercase tracking-widest text-gray-mid">

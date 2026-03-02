@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function NotFound(): React.ReactElement {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center px-6 pt-20 text-center">
+    <main className="flex min-h-screen flex-col items-center justify-center px-6 pt-36 text-center">
       <FadeIn className="space-y-6">
         <p className="font-heading text-[10rem] font-light leading-none text-gold">
           404

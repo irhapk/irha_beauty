@@ -25,7 +25,7 @@ export default async function ProductsPage() {
   const products = await getAllProducts();
 
   return (
-    <main className="pt-20">
+    <main className="pt-36">
       <div className="mx-auto max-w-[1470px] px-6 py-16">
         <FadeIn className="mb-12">
           <nav className="mb-4 flex gap-2 text-xs text-gray-mid">

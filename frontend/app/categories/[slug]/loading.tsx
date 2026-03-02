@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Loading(): React.ReactElement {
   return (
-    <div className="pt-20">
+    <div className="pt-36">
       <Skeleton className="h-64 w-full md:h-80" />
       <div className="mx-auto max-w-[1470px] px-6 py-16">
         <Skeleton className="mb-10 h-5 w-24" />
