@@ -18,15 +18,8 @@ const PULSE_SHADOW = [
 ];
 
 const slideVariants: Variants = {
-  enter: (dir: number) => ({
-    x: dir > 0 ? "100%" : "-100%",
-    opacity: 0,
-  }),
-  center: {
-    x: 0,
-    opacity: 1,
-    transition: { duration: 0.7, ease: EASE_OUT },
-  },
+  enter: (dir: number) => ({ x: dir > 0 ? "100%" : "-100%", opacity: 0 }),
+  center: { x: 0, opacity: 1, transition: { duration: 0.7, ease: EASE_OUT } },
   exit: (dir: number) => ({
     x: dir > 0 ? "-100%" : "100%",
     opacity: 0,
@@ -55,13 +48,9 @@ export function HeroCarousel() {
 
   return (
     <section
-      className="relative min-h-[calc(100vh-104px)] overflow-hidden bg-black"
-      onMouseEnter={() => {
-        isPaused.current = true;
-      }}
-      onMouseLeave={() => {
-        isPaused.current = false;
-      }}
+      className="relative overflow-hidden bg-black"
+      onMouseEnter={() => { isPaused.current = true; }}
+      onMouseLeave={() => { isPaused.current = false; }}
     >
       <AnimatePresence initial={false} custom={dir} mode="wait">
         <motion.div
@@ -71,22 +60,22 @@ export function HeroCarousel() {
           initial="enter"
           animate="center"
           exit="exit"
-          className="absolute inset-0"
+          className="relative w-full"
         >
-          {/* Background image */}
+          {/* Image — full width, height auto so full image always shows */}
           <Image
             src={slide.bannerImage}
             alt={slide.headline}
-            fill
+            width={1080}
+            height={1920}
             priority
-            sizes="100vw"
             placeholder="blur"
             blurDataURL={BLUR_DATA_URL}
-            className="object-contain"
+            className="w-full h-auto"
           />
           <div className="absolute inset-0 bg-black/50" />
 
-          {/* Text content — offset below fixed header (~104px) */}
+          {/* Text content — centered over the image */}
           <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
             <div className="max-w-3xl space-y-6">
               <motion.p
