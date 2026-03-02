@@ -39,7 +39,7 @@ export default function CheckoutPage(): React.ReactElement {
 
   if (orderPlaced) {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-center px-6 pt-20">
+      <main className="flex min-h-screen flex-col items-center justify-center px-6 pt-36">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -122,7 +122,7 @@ export default function CheckoutPage(): React.ReactElement {
   }
 
   return (
-    <main className="pt-20">
+    <main className="pt-36">
       <div className="mx-auto max-w-[1470px] px-6 py-16">
         <FadeIn className="mb-10">
           <h1 className="font-heading text-4xl font-light">Checkout</h1>

@@ -16,7 +16,7 @@ export function WishlistIcon() {
       className="relative flex h-11 w-11 items-center justify-center"
       aria-label={`Wishlist${count > 0 ? `, ${count} items` : ""}`}
     >
-      <FiHeart className="h-6 w-6 text-white" />
+      <FiHeart className="h-6 w-6 text-black transition-colors hover:text-gold" />
       <AnimatePresence>
         {count > 0 && (
           <motion.span

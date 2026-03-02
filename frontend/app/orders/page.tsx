@@ -64,7 +64,7 @@ function OrdersContent(): React.ReactElement {
   }, [isAuthenticated]);
 
   if (authLoading) return (
-    <main className="flex min-h-screen items-center justify-center pt-20">
+    <main className="flex min-h-screen items-center justify-center pt-36">
       <FiLoader className="h-8 w-8 animate-spin text-gold" />
     </main>
   );
@@ -73,7 +73,7 @@ function OrdersContent(): React.ReactElement {
 
 
   return (
-    <main className="pt-20">
+    <main className="pt-36">
       <div className="mx-auto max-w-[1470px] px-6 py-16">
         {/* Success banner */}
         {confirmed && (
@@ -169,7 +169,7 @@ export default function OrdersPage(): React.ReactElement {
   return (
     <Suspense
       fallback={
-        <main className="pt-20">
+        <main className="pt-36">
           <div className="mx-auto max-w-[1470px] px-6 py-16">
             <div className="mb-10 h-10 w-48 animate-pulse rounded-sm bg-gray-100" />
             <OrdersSkeleton />

@@ -26,7 +26,7 @@ export function CartPopup() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -16 }}
           transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="fixed top-24 right-4 z-[60] w-80 max-w-[calc(100vw-2rem)] overflow-hidden rounded-md border border-gold/30 bg-black shadow-2xl"
+          className="fixed top-[140px] right-4 z-[60] w-80 max-w-[calc(100vw-2rem)] overflow-hidden rounded-md border border-gold/30 bg-black shadow-2xl"
         >
           {/* Gold accent bar */}
           <div className="h-0.5 w-full bg-gold" />

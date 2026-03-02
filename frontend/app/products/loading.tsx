@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Loading(): React.ReactElement {
   return (
-    <div className="pt-20">
+    <div className="pt-36">
       <div className="mx-auto max-w-[1470px] px-6 py-16">
         <Skeleton className="mb-10 h-10 w-40" />
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">

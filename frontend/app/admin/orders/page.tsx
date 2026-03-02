@@ -87,7 +87,7 @@ export default function AdminOrdersPage() {
   }
 
   if (authLoading) return (
-    <main className="flex min-h-screen items-center justify-center pt-20">
+    <main className="flex min-h-screen items-center justify-center pt-36">
       <FiLoader className="h-8 w-8 animate-spin text-gold" />
     </main>
   );
@@ -96,7 +96,7 @@ export default function AdminOrdersPage() {
 
 
   return (
-    <main className="pt-20">
+    <main className="pt-36">
       <div className="mx-auto max-w-[1470px] px-6 py-16">
         <FadeIn className="mb-10">
           <p className="text-xs uppercase tracking-widest text-gold">Admin</p>

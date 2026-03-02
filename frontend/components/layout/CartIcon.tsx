@@ -16,7 +16,7 @@ export function CartIcon() {
       className="relative flex h-11 w-11 items-center justify-center"
       aria-label={`Shopping cart${count > 0 ? `, ${count} items` : ""}`}
     >
-      <FiShoppingBag className="h-6 w-6 text-white" />
+      <FiShoppingBag className="h-6 w-6 text-black transition-colors hover:text-gold" />
       <AnimatePresence>
         {count > 0 && (
           <motion.span
