@@ -172,5 +172,54 @@ Click: Home → /categories/shampoo → /products/1 → /cart
 **Expected**:
 - Each route change: current page fades + slides up (exit), new page fades + slides in (enter)
 - Smooth 300ms AnimatePresence transition — no hard cuts
-2. FastAPI backend running at `http://localhost:8000`
+
+---
+
+## Production Deployment
+
+### Backend — Railway
+
+1. Go to [railway.app](https://railway.app) → New Project → Deploy from GitHub repo
+2. Connect to `irhapk/irha_beauty` → select `backend/` as root directory
+3. Set environment variables in Railway dashboard:
+   ```
+   DATABASE_URL=postgresql+asyncpg://neondb_owner:<password>@<host>/neondb
+   JWT_SECRET=<your-secret>
+   JWT_ALGORITHM=HS256
+   ACCESS_TOKEN_EXPIRE_MINUTES=30
+   REFRESH_TOKEN_EXPIRE_DAYS=7
+   ENVIRONMENT=production
+   ADMIN_EMAIL=info.irhapk0@gmail.com
+   CORS_ORIGINS=https://irhapk.com,https://www.irhapk.com
+   ```
+4. Railway auto-detects `requirements.txt` + `Procfile` (or `railway.json`)
+5. Note the Railway-assigned backend URL (e.g. `https://irha-beauty-backend.up.railway.app`)
+
+### Frontend — Vercel
+
+1. Go to [vercel.com](https://vercel.com) → New Project → Import from `irhapk/irha_beauty`
+2. Set root directory to `frontend/`
+3. Set environment variable in Vercel dashboard:
+   ```
+   NEXT_PUBLIC_API_URL=https://irha-beauty-backend.up.railway.app
+   ```
+4. Deploy — Vercel auto-builds Next.js
+
+### Domain — Namecheap → irhapk.com
+
+1. In Vercel: Project Settings → Domains → Add `irhapk.com` and `www.irhapk.com`
+2. Vercel shows required DNS records (CNAME or A record)
+3. In Namecheap DNS panel: add the CNAME record pointing `www` → Vercel's cname target
+4. Add A record for `@` → Vercel's IP (or ALIAS if supported)
+5. SSL is auto-provisioned by Vercel
+
+### Verification
+
+```bash
+# Backend health check
+curl https://irha-beauty-backend.up.railway.app/api/v1/products
+
+# Frontend
+open https://irhapk.com
+```
 

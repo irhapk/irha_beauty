@@ -43,6 +43,7 @@ export default function AboutPage(): React.ReactElement {
           alt="Irha Beauty — brand imagery"
           fill
           priority
+          sizes="100vw"
           placeholder="blur"
           blurDataURL={BLUR_DATA_URL}
           className="object-cover"

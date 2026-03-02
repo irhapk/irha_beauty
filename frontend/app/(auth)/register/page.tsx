@@ -59,6 +59,7 @@ export default function RegisterPage(): React.ReactElement {
           alt="Irha Beauty"
           fill
           priority
+          sizes="50vw"
           placeholder="blur"
           blurDataURL={BLUR_DATA_URL}
           className="object-cover"

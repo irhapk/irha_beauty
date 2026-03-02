@@ -77,6 +77,7 @@ export default function CartPage() {
                           src={item.image}
                           alt={item.name}
                           fill
+                          sizes="80px"
                           placeholder="blur"
                           blurDataURL={BLUR_DATA_URL}
                           className="object-cover"

@@ -14,7 +14,7 @@ import { formatDate, formatPrice } from "@/lib/utils";
 import { useAuthStore } from "@/store";
 import type { Order } from "@/types";
 
-const ADMIN_EMAIL = "info.irhabeauty@gmail.com";
+const ADMIN_EMAIL = "info.irhapk0@gmail.com";
 
 const STATUS_STYLES: Record<Order["status"], string> = {
   pending: "bg-yellow-50 text-yellow-700 border-yellow-200",

@@ -157,6 +157,7 @@ export default function CheckoutPage(): React.ReactElement {
                         src={item.image}
                         alt={item.name}
                         fill
+                        sizes="48px"
                         placeholder="blur"
                         blurDataURL={BLUR_DATA_URL}
                         className="object-cover"

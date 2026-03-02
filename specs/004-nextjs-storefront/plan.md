@@ -24,6 +24,15 @@ Key technical decisions: directional AnimatePresence carousel, CSS group-hover d
 **Constraints**: Images must be in `frontend/public/`; cookies httpOnly (no JS access); no Stripe in Phase 4
 **Scale/Scope**: 1 product, 4 categories (facewash active; shampoo/oils/fragrance coming-soon), ~12 routes, single developer
 
+**Deployment Infrastructure**:
+| Layer | Platform | Details |
+|-------|----------|---------|
+| Frontend | Vercel | Auto-deploy from `irhapk/irha_beauty`; env var `NEXT_PUBLIC_API_URL` in Vercel dashboard |
+| Backend | Railway | FastAPI + Python 3.12; auto-deploy from `irhapk/irha_beauty`; env vars via Railway dashboard |
+| Database | NeonDB | Serverless PostgreSQL; `DATABASE_URL` injected as Railway env var (production) |
+| Domain | `irhapk.com` | Namecheap DNS → CNAME to Vercel; Railway provides backend subdomain |
+| Repo | `irhapk/irha_beauty` | GitHub (migrated from `infoirhabeauty-lab/irha_beauty`) |
+
 ---
 
 ## Constitution Check

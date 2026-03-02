@@ -145,7 +145,7 @@ export function Header() {
           <CartIcon />
           {isAuthenticated && user ? (
             <div className="flex items-center gap-3 text-sm">
-              {user.email === "info.irhabeauty@gmail.com" && (
+              {user.email === "info.irhapk0@gmail.com" && (
                 <Link
                   href="/admin/orders"
                   className="text-xs text-gold transition-colors hover:text-gold/70"
@@ -196,6 +196,7 @@ export function Header() {
           </SheetTrigger>
           <SheetContent
             side="right"
+            aria-describedby={undefined}
             className="w-72 border-white/10 bg-black text-white"
           >
             <SheetHeader>
@@ -241,7 +242,7 @@ export function Header() {
                 </div>
                 {isAuthenticated && user ? (
                   <>
-                    {user.email === "info.irhabeauty@gmail.com" && (
+                    {user.email === "info.irhapk0@gmail.com" && (
                       <Link
                         href="/admin/orders"
                         onClick={() => setMobileOpen(false)}

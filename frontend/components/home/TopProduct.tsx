@@ -64,6 +64,7 @@ export function TopProduct() {
                 src={product.image}
                 alt={product.name}
                 fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 placeholder="blur"
                 blurDataURL={BLUR_DATA_URL}
                 className="object-contain p-4 transition-transform duration-700 hover:scale-105"
