@@ -5,16 +5,22 @@ import type { CartItem, Product } from "@/types";
 
 interface CartState {
   items: CartItem[];
+  popupProduct: Product | null;
+  popupOpen: boolean;
   addItem: (product: Product, qty?: number) => void;
   removeItem: (productId: number) => void;
   updateQty: (productId: number, qty: number) => void;
   clearCart: () => void;
+  showPopup: (product: Product) => void;
+  hidePopup: () => void;
 }
 
 export const useCartStore = create<CartState>()(
   persist(
     (set) => ({
       items: [],
+      popupProduct: null,
+      popupOpen: false,
 
       addItem: (product, qty = 1) =>
         set((state) => {
@@ -62,10 +68,15 @@ export const useCartStore = create<CartState>()(
         })),
 
       clearCart: () => set({ items: [] }),
+
+      showPopup: (product) => set({ popupProduct: product, popupOpen: true }),
+
+      hidePopup: () => set({ popupOpen: false }),
     }),
     {
       name: "irha-cart",
       skipHydration: true,
+      partialize: (state) => ({ items: state.items }),
     },
   ),
 );

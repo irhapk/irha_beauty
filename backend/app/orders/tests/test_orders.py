@@ -31,6 +31,7 @@ async def _seed_product(db: AsyncSession) -> dict:
 def _order_payload(product_id: int, unit_price: float) -> dict:
     return {
         "customer_name": "Test Customer",
+        "email": "order@test.com",
         "address": "123 Main St",
         "city": "Karachi",
         "phone": "03001234567",
@@ -70,18 +71,13 @@ async def _register_and_login(async_client: httpx.AsyncClient) -> None:
 async def test_create_order_guest(
     async_client: httpx.AsyncClient, db_session: AsyncSession
 ) -> None:
-    """POST /orders without auth cookie → 201, user_id is null."""
+    """POST /orders without auth cookie → 401 (orders require login)."""
     product = await _seed_product(db_session)
     payload = _order_payload(product["product_id"], product["unit_price"])
 
     response = await async_client.post("/api/v1/orders", json=payload)
 
-    assert response.status_code == 201
-    body = response.json()
-    assert body["user_id"] is None
-    assert body["status"] == "pending"
-    assert body["payment_method"] == "cod"
-    assert len(body["items"]) == 1
+    assert response.status_code == 401
 
 
 @pytest.mark.asyncio

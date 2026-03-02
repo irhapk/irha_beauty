@@ -16,6 +16,10 @@ class Category(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(100), nullable=False, unique=True)
     description: Mapped[str] = mapped_column(Text, nullable=False, server_default="")
+    slug: Mapped[str] = mapped_column(String(120), nullable=False, server_default="")
+    status: Mapped[str] = mapped_column(String(20), nullable=False, server_default="active")
+    banner_image: Mapped[str] = mapped_column(String(500), nullable=False, server_default="")
+    category_image: Mapped[str] = mapped_column(String(500), nullable=False, server_default="")
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=False, server_default=func.now()
     )

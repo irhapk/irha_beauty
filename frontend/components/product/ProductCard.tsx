@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { motion } from "framer-motion";
 import { FaHeart } from "react-icons/fa";
@@ -21,13 +22,22 @@ export function ProductCard({ product }: ProductCardProps) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
 
+  const router = useRouter();
   const addItem = useCartStore((s) => s.addItem);
+  const showPopup = useCartStore((s) => s.showPopup);
   const toggle = useWishlistStore((s) => s.toggle);
   const isWishlisted = useWishlistStore((s) => s.isWishlisted(product.id));
 
   function handleAddToCart(e: React.MouseEvent): void {
     e.preventDefault();
     addItem(product);
+    showPopup(product);
+  }
+
+  function handleBuyNow(e: React.MouseEvent): void {
+    e.preventDefault();
+    addItem(product);
+    router.push("/checkout");
   }
 
   function handleWishlist(e: React.MouseEvent): void {
@@ -69,9 +79,15 @@ export function ProductCard({ product }: ProductCardProps) {
           <div className="absolute bottom-0 flex w-full transition-transform duration-300 ease-out sm:translate-y-full sm:group-hover:translate-y-0">
             <button
               onClick={handleAddToCart}
-              className="flex-1 bg-black py-3.5 text-xs tracking-widest uppercase text-white transition-colors hover:bg-gold hover:text-black"
+              className="flex-1 bg-black py-3.5 text-xs tracking-widest uppercase text-white transition-colors hover:bg-white hover:text-black"
             >
               Add to Cart
+            </button>
+            <button
+              onClick={handleBuyNow}
+              className="flex-1 bg-gold py-3.5 text-xs tracking-widest uppercase text-black transition-colors hover:bg-black hover:text-white"
+            >
+              Buy Now
             </button>
             <button
               onClick={handleWishlist}

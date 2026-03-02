@@ -6,6 +6,9 @@ from pydantic import BaseModel, ConfigDict, field_validator
 class ProductCreate(BaseModel):
     name: str
     description: str = ""
+    slug: str = ""
+    image: str = ""
+    hover_image: str = ""
     price: float
     stock: int
     category_id: int
@@ -44,6 +47,9 @@ class ProductCreate(BaseModel):
 class ProductUpdate(BaseModel):
     name: str | None = None
     description: str | None = None
+    slug: str | None = None
+    image: str | None = None
+    hover_image: str | None = None
     price: float | None = None
     stock: int | None = None
     category_id: int | None = None
@@ -79,6 +85,9 @@ class ProductRead(BaseModel):
     id: int
     name: str
     description: str
+    slug: str
+    image: str
+    hover_image: str
     price: float
     stock: int
     category_id: int

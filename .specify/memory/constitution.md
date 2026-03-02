@@ -1,8 +1,8 @@
 # Irha Beauty — Full-Stack Constitution
 
-**Version**: v4.1.0
+**Version**: v4.2.0
 **Ratified**: 2026-02-28
-**Amended**: 2026-03-02 — Deployment updated: Vercel (frontend) + Railway (backend) + irhapk.com domain; GitHub repo migrated to irhapk/irha_beauty
+**Amended**: 2026-03-02 — Phase 6: Backend schema extended — categories and products carry slug, image, status, banner_image fields. Static data bridge retired from pages (remains as mapper fallback only). GitHub repo: irhapk/irha_beauty; Deployment: Vercel + Railway + irhapk.com
 
 ---
 
@@ -12,7 +12,8 @@
 - **Backend Phase 1** ✅ Complete — CRUD APIs with in-memory storage
 - **Backend Phase 2** ✅ Complete — NeonDB (PostgreSQL) via SQLAlchemy async + Alembic migrations
 - **Backend Phase 3** ✅ Complete — JWT auth in httpOnly cookies, bcrypt, register/login/logout/refresh/me
-- **Frontend Phase 4** 🔄 In Progress — Next.js 15 storefront (black/white/gold luxury theme)
+- **Frontend Phase 4** ✅ Complete — Next.js 15 storefront (black/white/gold luxury theme)
+- **Phase 6** ✅ Complete — Backend schema extended: categories/products carry slug, image, status, banner_image; static data bridge retired from pages
 - **Goal**: Layered, domain-driven architecture on the backend. Animated, luxury ecommerce experience on the frontend.
 
 ---
@@ -551,4 +552,4 @@ Every rule below is non-negotiable:
 - Amendments require: a proposed change, ratification note, and version bump.
 - All specs, plans, tasks, and code reviews must cite compliance with this constitution.
 
-**Version**: v4.1.0 | **Ratified**: 2026-02-28 | **Last Amended**: 2026-03-02 — Deployment updated: Vercel + Railway + irhapk.com; GitHub repo: irhapk/irha_beauty
+**Version**: v4.2.0 | **Ratified**: 2026-02-28 | **Last Amended**: 2026-03-02 — Phase 6: Backend schema extended (slug, image, status, banner_image on categories + products). Static data bridge retired from pages. Vercel + Railway + irhapk.com; GitHub: irhapk/irha_beauty

@@ -4,6 +4,7 @@ import {
   Instrument_Sans,
 } from "next/font/google";
 
+import { CartPopup } from "@/components/layout/CartPopup";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
@@ -56,6 +57,7 @@ export default function RootLayout({
         <Providers>
           <ScrollProgress />
           <Header />
+          <CartPopup />
           <PageTransition>{children}</PageTransition>
           <Footer />
           <ScrollToTop />
