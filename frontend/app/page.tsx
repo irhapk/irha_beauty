@@ -47,7 +47,9 @@ export default async function Home() {
 
   return (
     <main>
-      <HeroCarousel />
+      <div className="pt-[104px]">
+        <HeroCarousel />
+      </div>
       <CategoryGrid categories={categories} />
       <FeaturedProducts products={products} />
       <TopProduct />
