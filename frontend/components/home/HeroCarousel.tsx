@@ -55,7 +55,7 @@ export function HeroCarousel() {
 
   return (
     <section
-      className="relative mt-[120px] min-h-[calc(100vh-120px)] overflow-hidden"
+      className="relative mt-36 min-h-[calc(100vh-9rem)] overflow-hidden"
       onMouseEnter={() => {
         isPaused.current = true;
       }}
@@ -82,7 +82,7 @@ export function HeroCarousel() {
             sizes="100vw"
             placeholder="blur"
             blurDataURL={BLUR_DATA_URL}
-            className="object-cover"
+            className="object-cover object-top"
           />
           <div className="absolute inset-0 bg-black/50" />
 
