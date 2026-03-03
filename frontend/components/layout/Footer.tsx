@@ -40,7 +40,7 @@ export function Footer() {
               alt="Irhapk"
               width={36}
               height={36}
-              className="rounded-full object-cover bg-white p-0.5"
+              className="rounded-full object-cover bg-black p-1"
             />
             <p className="text-sm leading-relaxed text-gray-light">
               Premium beauty products crafted with nature&apos;s finest
