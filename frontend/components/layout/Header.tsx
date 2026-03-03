@@ -11,6 +11,7 @@ import { FaInstagram } from "react-icons/fa";
 import {
   FiChevronLeft,
   FiChevronRight,
+  FiMail,
   FiMenu,
   FiPackage,
   FiPhone,
@@ -148,15 +149,24 @@ export function Header() {
             </button>
           </div>
 
-          {/* Right: Phone */}
-          <a
-            href="tel:+923121007112"
-            className="flex items-center gap-1.5 text-xs text-white/80 transition-colors hover:text-gold"
-          >
-            <FiPhone className="h-3 w-3" />
-            <span className="hidden sm:inline">+92-312-100-7112</span>
-            <span className="sm:hidden">Call Us</span>
-          </a>
+          {/* Right: Email + Phone */}
+          <div className="flex items-center gap-3">
+            <a
+              href="mailto:info.irhapk0@gmail.com"
+              className="hidden items-center gap-1.5 text-xs text-white/80 transition-colors hover:text-gold md:flex"
+            >
+              <FiMail className="h-3 w-3" />
+              <span>info.irhapk0@gmail.com</span>
+            </a>
+            <a
+              href="tel:+923121007112"
+              className="flex items-center gap-1.5 text-xs text-white/80 transition-colors hover:text-gold"
+            >
+              <FiPhone className="h-3 w-3" />
+              <span className="hidden sm:inline">+92-312-100-7112</span>
+              <span className="sm:hidden">Call Us</span>
+            </a>
+          </div>
 
         </div>
       </div>

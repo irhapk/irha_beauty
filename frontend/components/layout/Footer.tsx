@@ -36,11 +36,11 @@ export function Footer() {
           {/* Brand */}
           <motion.div variants={scrollItemVariants} className="space-y-4">
             <Image
-              src="/logo.jpeg"
-              alt="Irha Beauty"
+              src="/logo.png"
+              alt="Irhapk"
               width={36}
               height={36}
-              className="object-contain invert"
+              className="rounded-full object-cover bg-white p-0.5"
             />
             <p className="text-sm leading-relaxed text-gray-light">
               Premium beauty products crafted with nature&apos;s finest

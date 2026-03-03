@@ -153,7 +153,9 @@ export function ProductDetail({ product }: ProductDetailProps) {
             <div className="flex items-center gap-4 border-t border-gray-100 pt-4">
               <span className="text-xs text-gray-mid">Share:</span>
               <a
-                href="#"
+                href="https://wa.me/923220835045"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Share on WhatsApp"
                 className="text-gray-mid transition-colors hover:text-gold"
               >
