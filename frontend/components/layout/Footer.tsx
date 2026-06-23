@@ -113,6 +113,16 @@ export function Footer() {
           <p>&copy; {new Date().getFullYear()} Irha Beauty. All rights reserved.</p>
           <p>Made with love for luxurious beauty.</p>
         </div>
+        <div className="mx-auto max-w-[1470px] px-6 pb-4 text-center sm:text-right">
+          <a
+            href="https://portfolio-eta-gray-51.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[11px] text-white/30 transition-colors hover:text-white/60"
+          >
+            Built by Anus Yousuf
+          </a>
+        </div>
       </div>
     </footer>
   );

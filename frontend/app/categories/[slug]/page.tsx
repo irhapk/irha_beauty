@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
 import { FadeIn } from "@/components/animations";
-import { ComingSoon } from "@/components/product/ComingSoon";
 import { ProductGrid } from "@/components/product/ProductGrid";
 import {
   enrichCategories,
@@ -13,7 +12,11 @@ import {
   type BackendProduct,
 } from "@/lib/product-mapper";
 import { BLUR_DATA_URL } from "@/lib/utils";
-import { FEATURED_PRODUCTS, STATIC_CATEGORIES } from "@/lib/static-data";
+import {
+  COMING_SOON_PRODUCTS,
+  FEATURED_PRODUCTS,
+  STATIC_CATEGORIES,
+} from "@/lib/static-data";
 import type { Category, Product } from "@/types";
 
 export function generateStaticParams() {
@@ -70,11 +73,11 @@ export default async function CategoryPage({
   const category = await getCategoryBySlug(slug);
   if (!category) notFound();
 
-  if (category.status === "coming-soon") {
-    return <ComingSoon category={category} />;
-  }
+  let products = await getProductsByCategory(slug);
 
-  const products = await getProductsByCategory(slug);
+  if (category.status === "coming-soon") {
+    products = COMING_SOON_PRODUCTS.filter((p) => p.category === slug);
+  }
 
   return (
     <main className="pt-36">
